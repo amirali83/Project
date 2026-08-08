@@ -2,7 +2,7 @@
 HEADER
 File name: peer_-AA0001-000000000003.log
 Creation Date/Time: 2026-08-08 18:03:13
-Last Modified Date/Time: 2026-08-08 21:52:34
+Last Modified Date/Time: 2026-08-08 21:53:13
 ==================================================
 BODY
 Event Type      | Date/Time            | Description
@@ -1219,3 +1219,10 @@ HEARTBEAT_SYNC  | 2026-08-08 21:52:32  | Periodic ping
 PING_SEND       | 2026-08-08 21:52:32  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
 PING_SUCCESS    | 2026-08-08 21:52:32  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 24.38 ms
 ANNOUNCE        | 2026-08-08 21:52:34  | [Transferring_These_Files] Sending periodic update to tracker...
+PING_RECV       | 2026-08-08 21:53:01  | Received PING from ('127.0.0.1', 5197)
+ANNOUNCE        | 2026-08-08 21:53:01  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+HEARTBEAT_SYNC  | 2026-08-08 21:53:02  | Periodic ping
+PING_SEND       | 2026-08-08 21:53:03  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
+PING_SUCCESS    | 2026-08-08 21:53:03  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 36.93 ms
+ANNOUNCE        | 2026-08-08 21:53:04  | [Transferring_These_Files] Sending periodic update to tracker...
+SHUTDOWN_INIT   | 2026-08-08 21:53:13  | Keyboard interrupt received. Deregistering from tracker.
