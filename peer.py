@@ -2,8 +2,6 @@ import bencode
 import hashlib
 import urllib.parse
 import urllib.request
-import random
-import string
 import threading
 import time
 import socket 
@@ -12,6 +10,7 @@ from logger import BitTorrentLogger
 import sys
 import struct 
 
+### read terminal to see what has been started
 PEER_INDEX = sys.argv[1] if len(sys.argv) > 1 else "1"
 
 def get_sequential_peer_id(index):
@@ -22,17 +21,17 @@ def get_sequential_peer_id(index):
     except ValueError:
         num_index = 1
         
-    # تبدیل عدد به یک رشته ۱۲ کاراکتری که با صفر پر شده است
-    # مثال برای عدد 1: 000000000001
     sequential_part = f"{num_index:012d}"
     
     return prefix + sequential_part
 
-# تولید آیدی ثابت و ترتیبی بر اساس ورودی ترمینال
+### create ID
 MY_PEER_ID = get_sequential_peer_id(PEER_INDEX)
 
+### Create Work Space
 WORKSPACE_DIR = f"workspace_{MY_PEER_ID}"
 os.makedirs(WORKSPACE_DIR, exist_ok=True)
+os.makedirs(os.path.join(WORKSPACE_DIR, "Transferring_These_Files"), exist_ok=True)
 ACTIVE_TORRENTS = []
 GLOBAL_KNOWN_PEERS = set()
 ACTIVE_CONNECTIONS = {}
@@ -46,6 +45,7 @@ def start_peer_listener():
 
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     
+    ### Find empty socket 
     port = PEER_PORT
     flag = True
     while port <= 6889:
@@ -70,18 +70,22 @@ def start_peer_listener():
 
     while True:
         try:
+            ### when another peer connects 
             client_socket, addr = server_socket.accept()
+            ### reads the first 68 byte (the original handshake protocol that we tried to implement)
             data = client_socket.recv(68)
             
             if not data:
                 client_socket.close()
                 continue
-
+            
+            ### if the data type is ping
             if data == b"PING":
                 peer_logger.log_event("PING_RECV", f"Received PING from {addr}")
                 client_socket.send("PONG".encode('utf-8'))
                 client_socket.close()
 
+            ### if the data type is handshake
             elif len(data) >= 20 and data[0] == 19 and data[1:20] == b"BitTorrent protocol":
                 received_info_hash = data[28:48]
                 received_peer_id = data[48:68].decode('utf-8', errors='ignore')
@@ -89,11 +93,12 @@ def start_peer_listener():
                 print(f"      [+] INCOMING HANDSHAKE: Valid connection from {received_peer_id} at {addr}")
                 peer_logger.log_event("HANDSHAKE_RECV", f"Handshake verified from {received_peer_id}")
                 
-                # در جواب، ما هم باید هندشیک خودمون رو بفرستیم
+                ### send our own handshake 
                 my_handshake = create_handshake(received_info_hash, MY_PEER_ID)
                 client_socket.send(my_handshake)
                 
-                torrent_name = "Incoming_Torrent" # برای لاگ
+                ### create new thread
+                torrent_name = "Incoming_Torrent"
                 threading.Thread(target=handle_connection, args=(client_socket, addr[0], addr[1], torrent_name, received_info_hash), daemon=True).start()
             else:
                 client_socket.close()
@@ -101,7 +106,7 @@ def start_peer_listener():
         except Exception as e:
             peer_logger.log_event("ERROR", f"Listener error: {e}")
 
-def ping_other_peer(ip, port, torrent_name  ):
+def ping_other_peer(ip, port, torrent_name):
     try:
         peer_logger.log_event("PING_SEND", f"[{torrent_name}] Attempting to ping peer at {ip}:{port}")        
 
@@ -123,7 +128,6 @@ def ping_other_peer(ip, port, torrent_name  ):
             peer_logger.log_event("PING_SUCCESS", f"[{torrent_name}] Received PONG from {ip}:{port} | RTT: {rtt_ms:.2f} ms")
 
             try:
-                # فرض می‌کنیم آی‌پی خودمون 127.0.0.1 هست 
                 telemetry_url = f"http://127.0.0.1:8000/log_traffic?from_peer=127.0.0.1:{PEER_PORT}&to_peer={ip}:{port}&type=PING"
                 urllib.request.urlopen(telemetry_url)
             except Exception as e:
@@ -135,9 +139,9 @@ def ping_other_peer(ip, port, torrent_name  ):
 
 def handle_connection(client_socket, peer_ip, peer_port, torrent_name, info_hash):
     print(f"      [*] Starting connection handler for {peer_ip}:{peer_port}")
+    ### add connection to the active ones
     ACTIVE_CONNECTIONS[(peer_ip, peer_port)] = client_socket
     
-    # متغیرهای وضعیت (State Machine)
     am_choking = True
     am_interested = False
     peer_choking = True
@@ -147,6 +151,7 @@ def handle_connection(client_socket, peer_ip, peer_port, torrent_name, info_hash
     info_dict = None
     real_torrent_name = torrent_name
 
+    ### check and see if we are seeder or leeacher
     for t in ACTIVE_TORRENTS:
         if t['info_hash'] == info_hash:
             if int(t['left']) == 0:
@@ -161,21 +166,21 @@ def handle_connection(client_socket, peer_ip, peer_port, torrent_name, info_hash
         client_socket.close()
         return
 
-    # --- محاسبه تعداد و سایز قطعات ---
-    piece_length = info_dict.get('piece length', 262144) # معمولاً 256KB
+    ### calculating number of pieces
+    piece_length = info_dict.get('piece length', 262144) 
     total_length = 0
     if 'files' in info_dict:
         total_length = sum(f['length'] for f in info_dict['files'])
     else:
         total_length = info_dict.get('length', 0)
         
-    # فرمول محاسبه سقف تقسیم (بدون نیاز به کتابخانه math)
     num_pieces = (total_length + piece_length - 1) // piece_length
     
-    downloaded_buffer = {} # بافر برای نگهداری قطعات دریافت‌شده
-    current_piece_index = 0 # نشانگر قطعه فعلی برای دانلود
+    downloaded_buffer = {}
+    current_piece_index = 0
 
-    # 1. ارسال Bitfield
+    ### send bitfield to say what pieces we have
+    ### bit 1 -> we have it, 0 -> we do not have it 
     bitfield_payload = b'\xff' if is_seeder else b'\x00'
     msg_len = 1 + len(bitfield_payload)
     bitfield_msg = struct.pack(f'>IB{len(bitfield_payload)}s', msg_len, 5, bitfield_payload)
@@ -184,8 +189,9 @@ def handle_connection(client_socket, peer_ip, peer_port, torrent_name, info_hash
         client_socket.send(bitfield_msg)
         print(f"      [>] Sent BITFIELD (Seeder: {is_seeder}) to {peer_ip}:{peer_port}")
         
-        # 2. اگر فایل را نداریم (Leecher)، اول چک می‌کنیم که آیا قبلاً درخواست ندادیم؟
+        ### If we are leecher
         if not is_seeder:
+            ### check see if we have started downloading
             if info_hash in ACTIVE_DOWNLOADS:
                 print(f"      [*] Already downloading this torrent. Skipping duplicate request to {peer_ip}:{peer_port}")
             else:
@@ -196,73 +202,73 @@ def handle_connection(client_socket, peer_ip, peer_port, torrent_name, info_hash
                 print(f"      [>] Sent INTERESTED to {peer_ip}:{peer_port}")
                 peer_logger.log_event("STATE_CHANGE", f"Sent INTERESTED to {peer_ip}:{peer_port}")
 
-        # حلقه گوش دادن به پیام‌ها
+        ### listen to all messages
         while True:
+            ### first read the first 4 bytes (lenght)
             length_prefix = client_socket.recv(4)
             if not length_prefix or len(length_prefix) < 4:
                 break
                 
+            ### if message is empty
             incoming_msg_len = struct.unpack('>I', length_prefix)[0]
             if incoming_msg_len == 0:
-                continue # Keep-Alive
-                
+                continue
+
+            ### read another byte (message type)
             msg_id_byte = client_socket.recv(1)
             incoming_msg_id = struct.unpack('>B', msg_id_byte)[0]
             
+            ### read the rest (pay load)
             payload_len = incoming_msg_len - 1
             payload = client_socket.recv(payload_len) if payload_len > 0 else b''
             
-            # 3. پردازش پیام‌های دریافتی بر اساس ID
-            # 3. پردازش پیام‌های دریافتی بر اساس ID
+            ### type of messages 
+            ### id = 1 -> unchoke     , peer has let us download
+            ### id = 2 -> interested  , peer wants to download from us 
+            ### id = 4 -> have        , peer has a new piece
+            ### id = 5 -> bitfield    , get peers bitfield
+            ### id = 6 -> request     , upload piece for peer
+            ### id = 7 -> piece       , download from peer
+
             if incoming_msg_id == 5:
                 print(f"      [<] Received BITFIELD from {peer_ip}:{peer_port}")
                 
-            elif incoming_msg_id == 2: # Interested
+            elif incoming_msg_id == 2:
                 print(f"      [<] Received INTERESTED from {peer_ip}:{peer_port}")
                 if is_seeder:
                     unchoke_msg = struct.pack('>IB', 1, 1)
                     client_socket.send(unchoke_msg)
                     print(f"      [>] Sent UNCHOKE to {peer_ip}:{peer_port}")
                     
-            elif incoming_msg_id == 1: # Unchoke (آماده دانلود)
+            elif incoming_msg_id == 1:
                 print(f"      [<] Received UNCHOKE from {peer_ip}:{peer_port}. Requesting data...")
                 
-                # پیدا کردن سایز فایل برای درخواست
-                file_size = 0
-                for t in ACTIVE_TORRENTS:
-                    if t['info_hash'] == info_hash:
-                        file_size = int(t['left'])
-                        break
-                
-                # برای سادگی شبیه‌سازی، کل فایل را در یک قطعه درخواست می‌کنیم
-                # طول پیام: 13 بایت | آیدی: 6 | ایندکس: 0 | شروع: 0 | طول داده: file_size
+                ### get piece 
                 req_len = piece_length if (0 < num_pieces - 1) else (total_length - (0 * piece_length))
 
                 req_msg = struct.pack('>IBIII', 13, 6, 0, 0, req_len)
                 client_socket.send(req_msg)
                 print(f"      [>] Sent REQUEST for piece 0 (size: {req_len} bytes)")
                 try:
-                    # گزارش ارسال ریکوئست زرد رنگ
                     urllib.request.urlopen(f"http://127.0.0.1:8000/log_traffic?from_peer=127.0.0.1:{PEER_PORT}&to_peer={peer_ip}:{peer_port}&type=REQ")
                 except:
                     pass
 
-            elif incoming_msg_id == 4: # HAVE (یک کلاینت دیگر قطعه جدیدی دریافت کرده است)
+            elif incoming_msg_id == 4:
                 if payload_len == 4:
                     received_piece_idx = struct.unpack('>I', payload)[0]
                     print(f"      [<] Received HAVE from {peer_ip}:{peer_port} for piece {received_piece_idx}")
-                    # در یک کلاینت واقعی، اینجا آرایه Bitfield مربوط به این Peer در رم آپدیت می‌شود
-                    # تا در آینده بدانیم می‌توانیم این قطعه را هم از او درخواست کنیم.
+                    ### should be updated in parallel download
                 
-            elif incoming_msg_id == 6: # Request (سیدر این را دریافت می‌کند)
+            elif incoming_msg_id == 6:
                 if payload_len == 12:
                     piece_index, begin_offset, req_length = struct.unpack('>III', payload)
                     print(f"      [<] Received REQUEST from {peer_ip}:{peer_port} (Index: {piece_index}, Length: {req_length})")
                     
                     file_data = b""
                     try:
+                        ### make file data in binary
                         if 'files' in info_dict:
-                            # خواندن تمام فایل‌ها و چسباندن بایت‌های آن‌ها به یکدیگر
                             for f in info_dict['files']:
                                 f_path = os.path.join(WORKSPACE_DIR, real_torrent_name, *f['path'])
                                 with open(f_path, 'rb') as file_obj:
@@ -272,7 +278,7 @@ def handle_connection(client_socket, peer_ip, peer_port, torrent_name, info_hash
                             with open(file_path, 'rb') as file_obj:
                                 file_data = file_obj.read()
                             
-                        # --- جداسازی دقیق قطعه درخواستی ---
+                        ### choose the part we should send
                         absolute_offset = (piece_index * piece_length) + begin_offset
                         piece_data = file_data[absolute_offset : absolute_offset + req_length]
                         
@@ -288,37 +294,30 @@ def handle_connection(client_socket, peer_ip, peer_port, torrent_name, info_hash
                     except Exception as e:
                         print(f"      [-] File read error: {e}")
                         
-            elif incoming_msg_id == 7: # Piece (لیچر فایل را دریافت می‌کند)
+            elif incoming_msg_id == 7:
                 piece_index, begin_offset = struct.unpack('>II', payload[:8])
                 raw_piece_data = payload[8:]
                 
                 print(f"      [<] Received PIECE {piece_index} from {peer_ip}:{peer_port} ({len(raw_piece_data)} bytes)")
                 
-                # ---> 1. استخراج هش اصلی این قطعه از فایل تورنت (هر قطعه 20 بایت است) <---
                 expected_hash = info_dict['pieces'][piece_index * 20 : (piece_index + 1) * 20]
                 
-                # ---> 2. محاسبه هش SHA-1 برای دیتای دریافت شده <---
-                import hashlib
                 actual_hash = hashlib.sha1(raw_piece_data).digest()
                 
-                # ---> 3. مقایسه هش‌ها <---
+                ### compare hash to see that fila has been transfered correctly
                 if expected_hash != actual_hash:
                     print(f"      [-] HASH FAILED for piece {piece_index}! Data is corrupted. Dropping piece.")
-                    # اگر کلاینت واقعی بودیم، دوباره Request می‌فرستادیم. اما اینجا فعلاً قطعه را دور می‌اندازیم.
+                    ### parallel download
                     continue
                 else:
                     print(f"      [+] HASH VERIFIED for piece {piece_index}.")
                     
-                    # 4. ذخیره در صورت صحت کامل دیتای باینری
                     downloaded_buffer[piece_index] = raw_piece_data
                     current_piece_index += 1
                     
-                    # ---> اضافه کردن بخش ارسال پیام HAVE <---
-                    # طول پیام 5 بایت (1 بایت آیدی + 4 بایت ایندکس قطعه)
+                    ### send have message so we say that we have this part
                     have_msg = struct.pack('>IBI', 5, 4, piece_index)
                     
-                    # ما باید این پیام رو به همه کسانی که بهشون وصل هستیم بفرستیم
-                    # (در اینجا برای شبیه‌سازی، روی سوکت‌های فعال ارسال می‌کنیم)
                     for (p_ip, p_port), sock in list(ACTIVE_CONNECTIONS.items()):
                         try:
                             sock.send(have_msg)
@@ -326,7 +325,7 @@ def handle_connection(client_socket, peer_ip, peer_port, torrent_name, info_hash
                         except:
                             pass
 
-                    # بررسی ادامه دانلود یا اتمام کار
+                    ### go for the next piece
                     if current_piece_index < num_pieces:
                         req_len = piece_length if (current_piece_index < num_pieces - 1) else (total_length - (current_piece_index * piece_length))
                         req_msg = struct.pack('>IBIII', 13, 6, current_piece_index, 0, req_len)
@@ -339,8 +338,10 @@ def handle_connection(client_socket, peer_ip, peer_port, torrent_name, info_hash
                     else:
                         print("      [*] All pieces received! Reconstructing file(s)...")
                         
+                        ### attach all the pieces
                         full_data = b"".join(downloaded_buffer[i] for i in range(num_pieces))
                         try:
+                            ### save the files
                             if 'files' in info_dict:
                                 current_offset = 0
                                 for f in info_dict['files']:
@@ -359,7 +360,8 @@ def handle_connection(client_socket, peer_ip, peer_port, torrent_name, info_hash
                                 with open(file_path, 'wb') as file_obj:
                                     file_obj.write(full_data)
                                 print(f"      [+] FILE TRANSFER COMPLETE! Saved to {file_path}")
-                                
+                            
+                            ### become seeder for this piece and delete it from the files that are being downloaded
                             print(f"      [+] Status Upgrade: I am now a SEEDER for this torrent!")
                             for t in ACTIVE_TORRENTS:
                                 if t['info_hash'] == info_hash:
@@ -380,12 +382,13 @@ def handle_connection(client_socket, peer_ip, peer_port, torrent_name, info_hash
         if (peer_ip, peer_port) in ACTIVE_CONNECTIONS:
             del ACTIVE_CONNECTIONS[(peer_ip, peer_port)]
 
+### this is implemented as the real word case which is 68 bits
 def create_handshake(info_hash, peer_id):
-    """ساخت پیام 68 بایتی استاندارد هندشیک بیت‌تورنت"""
     pstr = b"BitTorrent protocol"
-    pstr_len = bytes([len(pstr)]) # بایت اول برابر 19
-    reserved = b'\x00' * 8        # 8 بایت رزرو شده
+    pstr_len = bytes([len(pstr)]) # 19 bytes
+    reserved = b'\x00' * 8        # 8 bytes
     
+    ### convert str to byte
     if isinstance(peer_id, str):
         peer_id_bytes = peer_id.encode('utf-8')
     else:
@@ -393,8 +396,8 @@ def create_handshake(info_hash, peer_id):
         
     return pstr_len + pstr + reserved + info_hash + peer_id_bytes
 
+### start handshake
 def initiate_handshake(ip, port, info_hash, torrent_name):
-    """ارسال هندشیک به Peer جدید برای شروع انتقال فایل"""
     try:
         peer_logger.log_event("HANDSHAKE_SEND", f"[{torrent_name}] Initiating handshake with {ip}:{port}")        
 
@@ -411,18 +414,14 @@ def initiate_handshake(ip, port, info_hash, torrent_name):
             print(f"      [+] HANDSHAKE SUCCESS: Connected to {remote_peer_id} for {torrent_name}")
             peer_logger.log_event("HANDSHAKE_SUCCESS", f"[{torrent_name}] Handshake successful with {remote_peer_id}")
             
-            # اینجا بعداً سوکت رو باز نگه می‌داریم برای ارسال Bitfield
             s.settimeout(None)
 
-            # --- تغییر جدید: سوکت رو نمی‌بندیم و میدیمش به Thread ---
             threading.Thread(target=handle_connection, args=(s, ip, port, torrent_name, info_hash), daemon=True).start()
-            return # خروج از تابع تا سوکت بسته نشه
+            return
         
-        s.close() # فعلا بعد از هندشیک می‌بندیم تا تو فاز بعدی مدیریت سوکت‌ها رو اضافه کنیم
+        s.close()
     except Exception as e:
         peer_logger.log_event("HANDSHAKE_FAIL", f"[{torrent_name}] Failed handshake with {ip}:{port} - {e}")
-
-
 
 def process_torrent(torrent_path):
     peer_id = MY_PEER_ID
@@ -438,38 +437,30 @@ def process_torrent(torrent_path):
         info_hash = hashlib.sha1(bencoded_info).digest()
         torrent_name = info_dict['name']
         
-        # --- منطق تشخیص Seeder و Leecher ---
         total_length = 0
         is_seeder = True
         
+        ### chek to see if we are leecher or seeder
         if 'files' in info_dict:
-            # حالت چند فایلی (Multi-file)
             root_dir = info_dict['name']
             for f in info_dict['files']:
                 total_length += f['length']
-                # ساخت مسیر دقیق فایل داخل پوشه اختصاصی این Peer
                 file_path = os.path.join(WORKSPACE_DIR, root_dir, *f['path'])
                 
-                # اگر فایل نبود یا سایزش فرق داشت، پس ما Leecher هستیم
                 if not os.path.exists(file_path) or os.path.getsize(file_path) != f['length']:
                     is_seeder = False
         else:
-            # حالت تک فایلی (Single-file)
             total_length = info_dict['length']
             file_path = os.path.join(WORKSPACE_DIR, torrent_name)
             
             if not os.path.exists(file_path) or os.path.getsize(file_path) != total_length:
                 is_seeder = False
 
-        ############print(50 * "*")
-        ############print(is_seeder)
-        # تعیین مقدار left بر اساس وضعیت فایل‌ها
         left_bytes = 0 if is_seeder else total_length
         
         status_text = "SEEDER" if is_seeder else "LEECHER"
         print(f"      [*] Status for '{torrent_name}': {status_text} (Left: {left_bytes} bytes)")
         peer_logger.log_event("FILE_CHECK", f"Determined status as {status_text} for {torrent_name}")
-        # ------------------------------------
 
         global ACTIVE_TORRENTS
         ACTIVE_TORRENTS.append({
@@ -560,12 +551,12 @@ def process_torrent(torrent_path):
         peer_logger.log_event("ERROR", f"Torrent process error: {e}")
 
 def start_client():
-    # ۱. شروع لیسنر در پس‌زمینه (برای دریافت اتصالات)
+    ### A Thread for listener 
     listener_thread = threading.Thread(target=start_peer_listener, daemon=True)
     listener_thread.start()
     time.sleep(1)
 
-    # ۲. اجرای هوشمند تورنت‌ها (فقط Seed شدن اتوماتیک فایل‌های موجود)
+    ### Check for files to act as Seed 
     torrent_files = [
         r"Torrent_Handler\my_real_torrent_1.txt",
         r"Torrent_Handler\my_real_torrent_2.txt"
@@ -573,13 +564,12 @@ def start_client():
     print("\n[*] Scanning for existing files to seed...")
     for i, file_path in enumerate(torrent_files):
         if os.path.exists(file_path):
-            import bencode
             with open(file_path, 'rb') as f:
                 torrent_data = bencode.decode(f.read())
             info_dict = torrent_data['info']
             torrent_name = info_dict['name']
 
-            # بررسی اینکه آیا فایل‌ها روی هارد وجود دارند (Seeder هستیم یا نه)
+            ### If this work space doesnt have the file not seed
             is_seeder = True
             if 'files' in info_dict:
                 for f in info_dict['files']:
@@ -600,7 +590,7 @@ def start_client():
             else:
                 print(f"[*] Missing data for '{torrent_name}'. Skipped. Use 'download {file_path}' to start.")
 
-    # ۳. شروع حلقه Heartbeat در پس‌زمینه
+    ### Ping other peers to check there is still connection 
     def heartbeat_loop():
         while True:
             time.sleep(30)
@@ -612,10 +602,10 @@ def start_client():
                     
     threading.Thread(target=heartbeat_loop, daemon=True).start()
 
-    # ۴. محیط کامند لاین برای کنترل دستی
+    ### make internal cmd to have control over download 
     print("\n[+] Peer is ready! Background tasks (Listener, Pings, Seeding) are running.")
     print("    Commands:")
-    print("    download <path_to_torrent_file>  -> Add a new torrent")
+    print("    download <path_to_torrent_file>  -> Add a new torrent (1 for my_real_torrent_1.txt and 2 for my_real_torrent_2.txt and)")
     print("    exit                             -> Stop the peer")
 
     try:
@@ -624,24 +614,31 @@ def start_client():
             if cmd == "exit":
                 break
             elif cmd.startswith("download"):
-                parts = cmd.split(maxsplit=1)
+                parts = cmd.split(maxsplit = 1)
                 if len(parts) > 1:
-                    # حذف کوتیشن‌های احتمالی در ابتدا و انتهای آدرس
-                    torrent_path = parts[1].strip('"').strip("'") 
+                    user_input = parts[1].strip('"').strip("'") 
+                    
+                    if user_input == "1":
+                        torrent_path = r"Torrent_Handler\my_real_torrent_1.txt"
+                    elif user_input == "2":
+                        torrent_path = r"Torrent_Handler\my_real_torrent_2.txt"
+                    else:
+                        torrent_path = user_input
                     
                     if os.path.exists(torrent_path):
                         print(f"[*] Adding new torrent: {torrent_path}")
                         t = threading.Thread(target=process_torrent, args=(torrent_path,), daemon=True)
                         t.start()
                     else:
-                        # نشان دادن مسیر مطلقی که پایتون در حال جستجوی آن است
                         abs_path = os.path.abspath(torrent_path)
                         print(f"[-] Error: Torrent file not found!")
                         print(f"    Python is exactly looking here: {abs_path}")
                 else:
-                    print("[-] Usage: download <path_to_torrent_file>")
+                    print("[-] Usage: download <1 or 2> OR download <full_path>")
     except KeyboardInterrupt:
         pass
+
+    ### Shuting down peer and save in logger
         
     print("\n[*] Shutting down peer. Notifying tracker...")
     peer_logger.log_event("SHUTDOWN_INIT", "Keyboard interrupt received. Deregistering from tracker.")
