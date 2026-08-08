@@ -40,6 +40,15 @@ ACTIVE_DOWNLOADS = set()
 peer_logger = BitTorrentLogger(f"peer_{MY_PEER_ID}.log", "peers")
 PEER_PORT = 6881 
 
+def recv_all(sock, n):
+    data = bytearray()
+    while len(data) < n:
+        packet = sock.recv(n - len(data))
+        if not packet:
+            break
+        data.extend(packet)
+    return bytes(data)
+
 def start_peer_listener():
     global PEER_PORT
 
@@ -205,7 +214,7 @@ def handle_connection(client_socket, peer_ip, peer_port, torrent_name, info_hash
         ### listen to all messages
         while True:
             ### first read the first 4 bytes (lenght)
-            length_prefix = client_socket.recv(4)
+            length_prefix = recv_all(client_socket, 4)
             if not length_prefix or len(length_prefix) < 4:
                 break
                 
@@ -220,7 +229,7 @@ def handle_connection(client_socket, peer_ip, peer_port, torrent_name, info_hash
             
             ### read the rest (pay load)
             payload_len = incoming_msg_len - 1
-            payload = client_socket.recv(payload_len) if payload_len > 0 else b''
+            payload = recv_all(client_socket, payload_len) if payload_len > 0 else b''
             
             ### type of messages 
             ### id = 1 -> unchoke     , peer has let us download
@@ -285,7 +294,7 @@ def handle_connection(client_socket, peer_ip, peer_port, torrent_name, info_hash
                         piece_msg_len = 9 + len(piece_data)
                         piece_header = struct.pack('>IBII', piece_msg_len, 7, piece_index, begin_offset)
                         
-                        client_socket.send(piece_header + piece_data)
+                        client_socket.sendall(piece_header + piece_data)
                         print(f"      [>] Sent PIECE {piece_index} to {peer_ip}:{peer_port} ({len(piece_data)} bytes)")
                         try:
                             urllib.request.urlopen(f"http://127.0.0.1:8000/log_traffic?from_peer=127.0.0.1:{PEER_PORT}&to_peer={peer_ip}:{peer_port}&type=PIECE")
@@ -303,6 +312,11 @@ def handle_connection(client_socket, peer_ip, peer_port, torrent_name, info_hash
                 expected_hash = info_dict['pieces'][piece_index * 20 : (piece_index + 1) * 20]
                 
                 actual_hash = hashlib.sha1(raw_piece_data).digest()
+                
+                print(payload[0:8])
+                print(f"      [DEBUG] Piece {piece_index} -> Expected Hash (Hex): {expected_hash.hex()}")
+                print(f"      [DEBUG] Piece {piece_index} -> Actual Hash (Hex):   {actual_hash.hex()}")
+                print(f"      [DEBUG] Raw data length: {len(raw_piece_data)}")
                 
                 ### compare hash to see that fila has been transfered correctly
                 if expected_hash != actual_hash:
@@ -327,7 +341,11 @@ def handle_connection(client_socket, peer_ip, peer_port, torrent_name, info_hash
 
                     ### go for the next piece
                     if current_piece_index < num_pieces:
-                        req_len = piece_length if (current_piece_index < num_pieces - 1) else (total_length - (current_piece_index * piece_length))
+                        if current_piece_index == num_pieces - 1:
+                            req_len = total_length - (current_piece_index * piece_length)
+                        else:
+                            req_len = piece_length
+                        
                         req_msg = struct.pack('>IBIII', 13, 6, current_piece_index, 0, req_len)
                         client_socket.send(req_msg)
                         print(f"      [>] Sent REQUEST for piece {current_piece_index} (size: {req_len} bytes)")
