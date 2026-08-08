@@ -12,13 +12,10 @@ class TrackerHandler(BaseHTTPRequestHandler):
         parsed_url = urllib.parse.urlparse(self.path)
         params = urllib.parse.parse_qs(parsed_url.query)
         
-        # --------------------------------------------------------
-        # 0. مسیر جدید برای دریافت گزارش پینگ از Peerها
-        # --------------------------------------------------------
         if parsed_url.path == '/log_traffic':
             from_p = params.get('from_peer', [''])[0]
             to_p = params.get('to_peer', [''])[0]
-            msg_type = params.get('type', ['PING'])[0] # PING, PIECE, REQ, etc.
+            msg_type = params.get('type', ['PING'])[0]
             
             if from_p and to_p:
                 import time
@@ -30,16 +27,12 @@ class TrackerHandler(BaseHTTPRequestHandler):
                     'time': time.time(),
                     'id': f"edge_{time.time()}"
                 })
-                # نگهداری ترافیک‌های ۳ ثانیه اخیر برای نمایش انیمیشن
                 live_pings = [p for p in live_pings if time.time() - p['time'] < 3]
                 
             self.send_response(200)
             self.end_headers()
             return
 
-        # --------------------------------------------------------
-        # 1. API Endpoint (ارسال همزمان دیتای Swarm و پینگ‌های زنده)
-        # --------------------------------------------------------
         elif parsed_url.path == '/api/network':
             import json
             safe_db = {}
@@ -59,21 +52,16 @@ class TrackerHandler(BaseHTTPRequestHandler):
             self.wfile.write(json.dumps(response_data).encode('utf-8'))
             return
             
-        # --------------------------------------------------------
-        # 2. Dashboard Endpoint (Added P2P Mesh Topology)
-        # --------------------------------------------------------
         elif parsed_url.path == '/dashboard':
             self.send_response(200)
             self.send_header('Content-type', 'text/html')
             self.end_headers()
             
             try:
-                # باز کردن و خواندن فایل HTML
                 with open('Desktop.html', 'r', encoding='utf-8') as f:
                     html_content = f.read()
                 self.wfile.write(html_content.encode('utf-8'))
             except FileNotFoundError:
-                # هندل کردن خطای پیدا نشدن فایل
                 error_msg = "<h2>Error 404: dashboard.html file not found!</h2>"
                 self.wfile.write(error_msg.encode('utf-8'))
             return
