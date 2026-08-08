@@ -137,8 +137,9 @@ def ping_other_peer(ip, port, torrent_name):
             peer_logger.log_event("PING_SUCCESS", f"[{torrent_name}] Received PONG from {ip}:{port} | RTT: {rtt_ms:.2f} ms")
 
             try:
-                telemetry_url = f"http://127.0.0.1:8000/log_traffic?from_peer=127.0.0.1:{PEER_PORT}&to_peer={ip}:{port}&type=PING"
-                urllib.request.urlopen(telemetry_url)
+                urllib.request.urlopen(f"http://127.0.0.1:8000/log_traffic?from_peer=127.0.0.1:{PEER_PORT}&to_peer={ip}:{port}&type=PING")
+                
+                urllib.request.urlopen(f"http://127.0.0.1:8000/log_traffic?from_peer={ip}:{port}&to_peer=127.0.0.1:{PEER_PORT}&type=PONG")
             except Exception as e:
                 pass
 
@@ -259,7 +260,7 @@ def handle_connection(client_socket, peer_ip, peer_port, torrent_name, info_hash
                 client_socket.send(req_msg)
                 print(f"      [>] Sent REQUEST for piece 0 (size: {req_len} bytes)")
                 try:
-                    urllib.request.urlopen(f"http://127.0.0.1:8000/log_traffic?from_peer=127.0.0.1:{PEER_PORT}&to_peer={peer_ip}:{peer_port}&type=REQ")
+                    urllib.request.urlopen(f"http://127.0.0.1:8000/log_traffic?from_peer=127.0.0.1:{PEER_PORT}&to_peer={peer_ip}:{peer_port}&type=REQ%200")
                 except:
                     pass
 
@@ -296,10 +297,6 @@ def handle_connection(client_socket, peer_ip, peer_port, torrent_name, info_hash
                         
                         client_socket.sendall(piece_header + piece_data)
                         print(f"      [>] Sent PIECE {piece_index} to {peer_ip}:{peer_port} ({len(piece_data)} bytes)")
-                        try:
-                            urllib.request.urlopen(f"http://127.0.0.1:8000/log_traffic?from_peer=127.0.0.1:{PEER_PORT}&to_peer={peer_ip}:{peer_port}&type=PIECE")
-                        except:
-                            pass
                     except Exception as e:
                         print(f"      [-] File read error: {e}")
                         
@@ -326,6 +323,11 @@ def handle_connection(client_socket, peer_ip, peer_port, torrent_name, info_hash
                 else:
                     print(f"      [+] HASH VERIFIED for piece {piece_index}.")
                     
+                    try:
+                        urllib.request.urlopen(f"http://127.0.0.1:8000/log_traffic?from_peer={peer_ip}:{peer_port}&to_peer=127.0.0.1:{PEER_PORT}&type=PIECE%20{piece_index}")
+                    except:
+                        pass
+
                     downloaded_buffer[piece_index] = raw_piece_data
                     current_piece_index += 1
                     
@@ -350,7 +352,7 @@ def handle_connection(client_socket, peer_ip, peer_port, torrent_name, info_hash
                         client_socket.send(req_msg)
                         print(f"      [>] Sent REQUEST for piece {current_piece_index} (size: {req_len} bytes)")
                         try:
-                            urllib.request.urlopen(f"http://127.0.0.1:8000/log_traffic?from_peer=127.0.0.1:{PEER_PORT}&to_peer={peer_ip}:{peer_port}&type=REQ")
+                            urllib.request.urlopen(f"http://127.0.0.1:8000/log_traffic?from_peer=127.0.0.1:{PEER_PORT}&to_peer={peer_ip}:{peer_port}&type=REQ%20{current_piece_index}")
                         except:
                             pass
                     else:

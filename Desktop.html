@@ -4,14 +4,31 @@
     <title>BitTorrent Swarm Dashboard</title>
     <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
     <style type="text/css">
-        body { margin: 0; background-color: #1a1a2e; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}
-        #mynetwork { width: 100vw; height: 100vh; }
+        body { margin: 0; background-color: #1a1a2e; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex;}
+        #mynetwork { flex-grow: 1; height: 100vh; }
         #title { position: absolute; top: 15px; left: 20px; z-index: 10; text-shadow: 2px 2px 4px #000000; }
+        
+        #log-panel { width: 350px; height: 100vh; background-color: #0f172a; border-left: 2px solid #334155; display: flex; flex-direction: column;}
+        #log-header { padding: 15px; background-color: #1e293b; border-bottom: 1px solid #334155; font-weight: bold;}
+        #log-content { flex-grow: 1; overflow-y: auto; padding: 10px; font-size: 13px; font-family: monospace;}
+        
+        .log-entry { margin-bottom: 8px; padding-bottom: 5px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .log-PING { color: #ff5555; }
+        .log-PONG { color: #ff9900; } 
+        .log-PIECE { color: #55ff55; }
+        .log-REQ { color: #ffff55; }
+        .log-time { color: #94a3b8; font-size: 11px; margin-right: 8px;}
     </style>
 </head>
 <body>
     <h2 id="title">Real-Time P2P Topology & Traffic</h2>
     <div id="mynetwork"></div>
+    
+    <div id="log-panel">
+        <div id="log-header">Traffic Event Log (Persistent)</div>
+        <div id="log-content"></div>
+    </div>
+
     <script type="text/javascript">
         var container = document.getElementById('mynetwork');
         var nodes = new vis.DataSet();
@@ -19,17 +36,16 @@
 
         var network = new vis.Network(container, {nodes: nodes, edges: edges}, {
             physics: { stabilization: false, barnesHut: { gravitationalConstant: -10000 } },
-            edges: { smooth: { type: 'curvedCW', roundness: 0.2 } }
+            edges: { smooth: { type: 'dynamic' } } 
         });
 
-        let peerSet = new Set();
-        let activeTrafficEdges = new Set();
+        let seenLogIds = new Set(); 
+        let visualQueue = [];
 
         function fetchAndUpdateGraph() {
             fetch('/api/network')
                 .then(response => response.json())
                 .then(data => {
-                    // 1. آپدیت نودها
                     if (!nodes.get('Tracker')) {
                         nodes.add({id: 'Tracker', label: 'Tracker Server', shape: 'database', color: '#e94560', size: 40});
                     }
@@ -57,50 +73,68 @@
                         colorIndex++;
                     }
 
-                    // 2. مدیریت انیمیشن ترافیک (PING, PIECE, REQUEST)
-                    let currentTrafficIds = new Set();
-                    
+                    let logContainer = document.getElementById('log-content');
                     if (data.links) {
                         data.links.forEach(link => {
-                            let linkId = link.id;
-                            currentTrafficIds.add(linkId);
-                            
-                            if (!edges.get(linkId)) {
-                                // تعیین رنگ بر اساس نوع پیام
-                                let edgeColor = '#00e5ff'; // پیش‌فرض
-                                let edgeWidth = 2;
-                                if (link.type === 'PING') { edgeColor = '#ff3333'; } // خط قرمز برای پینگ
-                                if (link.type === 'PIECE') { edgeColor = '#00ff00'; edgeWidth = 4; } // خط سبز و ضخیم برای ارسال فایل
-                                if (link.type === 'REQ') { edgeColor = '#ffff00'; } // خط زرد برای درخواست
+                            if (!seenLogIds.has(link.id)) {
+                                seenLogIds.add(link.id); 
                                 
-                                edges.add({
-                                    id: linkId,
-                                    from: link.from,
-                                    to: link.to,
-                                    label: link.type,
-                                    color: { color: edgeColor },
-                                    width: edgeWidth,
-                                    arrows: { to: { enabled: true, scaleFactor: 1.2 } },
-                                    font: { align: 'top', color: edgeColor, strokeWidth: 0, size: 12 },
-                                    dashes: [5, 5] // ایجاد حالت خط‌چین برای القای حس حرکت
-                                });
-                                activeTrafficEdges.add(linkId);
+                                let baseType = link.type.split(' ')[0];
+                                
+                                let logItem = document.createElement('div');
+                                logItem.className = 'log-entry log-' + baseType; 
+                                let timestamp = new Date().toLocaleTimeString('en-US', { hour12: false, hour: "numeric", minute: "numeric", second: "numeric" });
+                                
+                                logItem.innerHTML = `<span class="log-time">[${timestamp}]</span> <strong>${link.type}</strong>: ${link.from} ➔ ${link.to}`;
+                                logContainer.prepend(logItem);
+                                
+                                visualQueue.push(link);
                             }
                         });
                     }
-
-                    // 3. پاک کردن ترافیک‌های قدیمی که دیگر در API نیستند
-                    activeTrafficEdges.forEach(edgeId => {
-                        if (!currentTrafficIds.has(edgeId)) {
-                            edges.remove(edgeId);
-                            activeTrafficEdges.delete(edgeId);
-                        }
-                    });
                 })
                 .catch(err => console.error("Error fetching network data:", err));
         }
 
-        setInterval(fetchAndUpdateGraph, 1000); // سرعت رفرش را به ۱ ثانیه کاهش دادیم
+        setInterval(() => {
+            let processCount = visualQueue.length > 6 ? 3 : 1; 
+            
+            for (let i = 0; i < processCount; i++) {
+                if (visualQueue.length > 0) {
+                    let link = visualQueue.shift(); 
+                    let baseType = link.type.split(' ')[0];
+
+                    let edgeColor = '#00e5ff';
+                    let edgeWidth = 2;
+                    if (baseType === 'PING') { edgeColor = '#ff3333'; }
+                    if (baseType === 'PONG') { edgeColor = '#ff9900'; }
+                    if (baseType === 'PIECE') { edgeColor = '#00ff00'; edgeWidth = 4; }
+                    if (baseType === 'REQ') { edgeColor = '#ffff00'; }
+
+                    if (!edges.get(link.id)) {
+                        edges.add({
+                            id: link.id,
+                            from: link.from,
+                            to: link.to,
+                            label: link.type,
+                            color: { color: edgeColor },
+                            width: edgeWidth,
+                            arrows: { to: { enabled: true, scaleFactor: 1.2 } },
+                            font: { align: 'top', color: edgeColor, strokeWidth: 0, size: 12, background: 'rgba(26,26,46,0.8)' },
+                            dashes: [5, 5]
+                        });
+                    }
+                    
+                    setTimeout(() => {
+                        if (edges.get(link.id)) {
+                            edges.remove(link.id);
+                        }
+                    }, 2500);
+                }
+            }
+        }, 600);
+
+        setInterval(fetchAndUpdateGraph, 1000);
         fetchAndUpdateGraph();
     </script>
 </body>

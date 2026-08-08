@@ -64,7 +64,7 @@ if __name__ == "__main__":
     else:
         print(f"[-] {json_file_1} not found.")
 
-    ### Reading the second Torrent (متغیرها اصلاح شد)
+    ### Reading the second Torrent
     json_file_2 = "torrent2.json"
     output_file_2 = "my_real_torrent_2.txt"
 
