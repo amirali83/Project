@@ -17,7 +17,6 @@ PEER_INDEX = sys.argv[1] if len(sys.argv) > 1 else "1"
 def get_sequential_peer_id(index):
     prefix = '-AA0001-' 
     
-    # تبدیل ایندکس به عدد (برای اطمینان)
     try:
         num_index = int(index)
     except ValueError:
