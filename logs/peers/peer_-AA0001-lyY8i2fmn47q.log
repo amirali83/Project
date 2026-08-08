@@ -1,0 +1,388 @@
+==================================================
+HEADER
+File name: peer_-AA0001-lyY8i2fmn47q.log
+Creation Date/Time: 2026-08-08 13:10:47
+Last Modified Date/Time: 2026-08-08 13:45:05
+==================================================
+BODY
+Event Type      | Date/Time            | Description
+--------------------------------------------------
+PORT_BUSY       | 2026-08-08 13:10:47  | Port 6881 in use. Trying next...
+PORT_BUSY       | 2026-08-08 13:10:47  | Port 6882 in use. Trying next...
+LISTENER_START  | 2026-08-08 13:10:47  | Peer listening for direct connections on port 6883
+FILE_CHECK      | 2026-08-08 13:10:48  | Determined status as LEECHER for Transferring_These_Files/sample3.png
+PING_RECV       | 2026-08-08 13:10:48  | Received PING from ('127.0.0.1', 11066)
+FILE_CHECK      | 2026-08-08 13:10:49  | Determined status as LEECHER for Transferring_These_Files
+PING_RECV       | 2026-08-08 13:10:49  | Received PING from ('127.0.0.1', 11073)
+SYSTEM_READY    | 2026-08-08 13:10:50  | All torrent threads processed. Entering heartbeat loop.
+PING_RECV       | 2026-08-08 13:10:50  | Received PING from ('127.0.0.1', 11075)
+SHUTDOWN_INIT   | 2026-08-08 13:10:52  | Keyboard interrupt received. Deregistering from tracker.
+PORT_BUSY       | 2026-08-08 13:11:45  | Port 6881 in use. Trying next...
+PORT_BUSY       | 2026-08-08 13:11:45  | Port 6882 in use. Trying next...
+LISTENER_START  | 2026-08-08 13:11:45  | Peer listening for direct connections on port 6883
+FILE_CHECK      | 2026-08-08 13:11:46  | Determined status as SEEDER for Transferring_These_Files/sample3.png
+HANDSHAKE_SEND  | 2026-08-08 13:11:46  | [Transferring_These_Files/sample3.png] Initiating handshake with 127.0.0.1:6882
+HANDSHAKE_SUCCESS | 2026-08-08 13:11:46  | [Transferring_These_Files/sample3.png] Handshake successful with -AA0001-WL99b7svcXnQ
+FILE_CHECK      | 2026-08-08 13:11:47  | Determined status as LEECHER for Transferring_These_Files
+HANDSHAKE_SEND  | 2026-08-08 13:11:47  | [Transferring_These_Files] Initiating handshake with 127.0.0.1:6882
+HANDSHAKE_SUCCESS | 2026-08-08 13:11:47  | [Transferring_These_Files] Handshake successful with -AA0001-WL99b7svcXnQ
+SYSTEM_READY    | 2026-08-08 13:11:48  | All torrent threads processed. Entering heartbeat loop.
+PING_RECV       | 2026-08-08 13:11:58  | Received PING from ('127.0.0.1', 11113)
+PING_RECV       | 2026-08-08 13:11:59  | Received PING from ('127.0.0.1', 11116)
+PING_RECV       | 2026-08-08 13:12:00  | Received PING from ('127.0.0.1', 11119)
+ANNOUNCE        | 2026-08-08 13:12:16  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 13:12:17  | [Transferring_These_Files] Sending periodic update to tracker...
+HEARTBEAT_SYNC  | 2026-08-08 13:12:18  | Initiating periodic ping to 1 known peers
+PING_SEND       | 2026-08-08 13:12:18  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 13:12:18  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 28.00 ms
+PING_RECV       | 2026-08-08 13:12:30  | Received PING from ('127.0.0.1', 11138)
+SHUTDOWN_INIT   | 2026-08-08 13:12:42  | Keyboard interrupt received. Deregistering from tracker.
+PORT_BUSY       | 2026-08-08 13:17:45  | Port 6881 in use. Trying next...
+PORT_BUSY       | 2026-08-08 13:17:45  | Port 6882 in use. Trying next...
+LISTENER_START  | 2026-08-08 13:17:45  | Peer listening for direct connections on port 6883
+FILE_CHECK      | 2026-08-08 13:17:46  | Determined status as SEEDER for Transferring_These_Files/sample3.png
+HANDSHAKE_SEND  | 2026-08-08 13:17:46  | [Transferring_These_Files/sample3.png] Initiating handshake with 127.0.0.1:6882
+HANDSHAKE_SUCCESS | 2026-08-08 13:17:47  | [Transferring_These_Files/sample3.png] Handshake successful with -AA0001-WL99b7svcXnQ
+FILE_CHECK      | 2026-08-08 13:17:47  | Determined status as LEECHER for Transferring_These_Files
+HANDSHAKE_SEND  | 2026-08-08 13:17:47  | [Transferring_These_Files] Initiating handshake with 127.0.0.1:6882
+HANDSHAKE_SUCCESS | 2026-08-08 13:17:48  | [Transferring_These_Files] Handshake successful with -AA0001-WL99b7svcXnQ
+SYSTEM_READY    | 2026-08-08 13:17:48  | All torrent threads processed. Entering heartbeat loop.
+SHUTDOWN_INIT   | 2026-08-08 13:18:01  | Keyboard interrupt received. Deregistering from tracker.
+PORT_BUSY       | 2026-08-08 13:18:17  | Port 6881 in use. Trying next...
+PORT_BUSY       | 2026-08-08 13:18:17  | Port 6882 in use. Trying next...
+LISTENER_START  | 2026-08-08 13:18:17  | Peer listening for direct connections on port 6883
+FILE_CHECK      | 2026-08-08 13:18:18  | Determined status as SEEDER for Transferring_These_Files/sample3.png
+HANDSHAKE_SEND  | 2026-08-08 13:18:18  | [Transferring_These_Files/sample3.png] Initiating handshake with 127.0.0.1:6882
+HANDSHAKE_SUCCESS | 2026-08-08 13:18:18  | [Transferring_These_Files/sample3.png] Handshake successful with -AA0001-WL99b7svcXnQ
+MSG_RECV        | 2026-08-08 13:18:18  | Received Bitfield from 127.0.0.1:6882
+FILE_CHECK      | 2026-08-08 13:18:19  | Determined status as LEECHER for Transferring_These_Files
+HANDSHAKE_SEND  | 2026-08-08 13:18:19  | [Transferring_These_Files] Initiating handshake with 127.0.0.1:6882
+HANDSHAKE_SUCCESS | 2026-08-08 13:18:19  | [Transferring_These_Files] Handshake successful with -AA0001-WL99b7svcXnQ
+MSG_RECV        | 2026-08-08 13:18:19  | Received Bitfield from 127.0.0.1:6882
+SYSTEM_READY    | 2026-08-08 13:18:20  | All torrent threads processed. Entering heartbeat loop.
+PING_RECV       | 2026-08-08 13:18:39  | Received PING from ('127.0.0.1', 11354)
+PING_RECV       | 2026-08-08 13:18:40  | Received PING from ('127.0.0.1', 11359)
+PING_RECV       | 2026-08-08 13:18:41  | Received PING from ('127.0.0.1', 11361)
+ANNOUNCE        | 2026-08-08 13:18:48  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 13:18:49  | [Transferring_These_Files] Sending periodic update to tracker...
+HEARTBEAT_SYNC  | 2026-08-08 13:18:50  | Initiating periodic ping to 1 known peers
+PING_SEND       | 2026-08-08 13:18:50  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 13:18:50  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 13.84 ms
+PING_RECV       | 2026-08-08 13:19:11  | Received PING from ('127.0.0.1', 11377)
+ANNOUNCE        | 2026-08-08 13:19:18  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 13:19:19  | [Transferring_These_Files] Sending periodic update to tracker...
+HEARTBEAT_SYNC  | 2026-08-08 13:19:20  | Initiating periodic ping to 1 known peers
+PING_SEND       | 2026-08-08 13:19:20  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 13:19:20  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 20.09 ms
+PING_RECV       | 2026-08-08 13:19:41  | Received PING from ('127.0.0.1', 11398)
+ANNOUNCE        | 2026-08-08 13:19:48  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 13:19:49  | [Transferring_These_Files] Sending periodic update to tracker...
+HEARTBEAT_SYNC  | 2026-08-08 13:19:50  | Initiating periodic ping to 1 known peers
+PING_SEND       | 2026-08-08 13:19:50  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 13:19:50  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 19.81 ms
+PING_RECV       | 2026-08-08 13:20:11  | Received PING from ('127.0.0.1', 11412)
+ANNOUNCE        | 2026-08-08 13:20:19  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 13:20:19  | [Transferring_These_Files] Sending periodic update to tracker...
+HEARTBEAT_SYNC  | 2026-08-08 13:20:21  | Initiating periodic ping to 1 known peers
+PING_SEND       | 2026-08-08 13:20:21  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 13:20:21  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 14.32 ms
+PING_RECV       | 2026-08-08 13:20:46  | Received PING from ('127.0.0.1', 11429)
+ANNOUNCE        | 2026-08-08 13:20:49  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 13:20:49  | [Transferring_These_Files] Sending periodic update to tracker...
+HEARTBEAT_SYNC  | 2026-08-08 13:20:51  | Initiating periodic ping to 1 known peers
+PING_SEND       | 2026-08-08 13:20:51  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 13:20:51  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 13.73 ms
+PING_RECV       | 2026-08-08 13:21:16  | Received PING from ('127.0.0.1', 11444)
+ANNOUNCE        | 2026-08-08 13:21:19  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 13:21:19  | [Transferring_These_Files] Sending periodic update to tracker...
+HEARTBEAT_SYNC  | 2026-08-08 13:21:21  | Initiating periodic ping to 1 known peers
+PING_SEND       | 2026-08-08 13:21:21  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 13:21:21  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 19.47 ms
+PING_RECV       | 2026-08-08 13:21:46  | Received PING from ('127.0.0.1', 11473)
+ANNOUNCE        | 2026-08-08 13:21:49  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 13:21:50  | [Transferring_These_Files] Sending periodic update to tracker...
+HEARTBEAT_SYNC  | 2026-08-08 13:21:51  | Initiating periodic ping to 1 known peers
+PING_SEND       | 2026-08-08 13:21:51  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 13:21:52  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 17.36 ms
+PING_RECV       | 2026-08-08 13:22:16  | Received PING from ('127.0.0.1', 11486)
+ANNOUNCE        | 2026-08-08 13:22:19  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 13:22:20  | [Transferring_These_Files] Sending periodic update to tracker...
+HEARTBEAT_SYNC  | 2026-08-08 13:22:22  | Initiating periodic ping to 1 known peers
+PING_SEND       | 2026-08-08 13:22:22  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 13:22:22  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 13.49 ms
+PING_RECV       | 2026-08-08 13:22:46  | Received PING from ('127.0.0.1', 11504)
+ANNOUNCE        | 2026-08-08 13:22:49  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 13:22:50  | [Transferring_These_Files] Sending periodic update to tracker...
+HEARTBEAT_SYNC  | 2026-08-08 13:22:52  | Initiating periodic ping to 1 known peers
+PING_SEND       | 2026-08-08 13:22:52  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 13:22:52  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 26.59 ms
+PING_RECV       | 2026-08-08 13:23:16  | Received PING from ('127.0.0.1', 11524)
+ANNOUNCE        | 2026-08-08 13:23:19  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 13:23:20  | [Transferring_These_Files] Sending periodic update to tracker...
+HEARTBEAT_SYNC  | 2026-08-08 13:23:22  | Initiating periodic ping to 1 known peers
+PING_SEND       | 2026-08-08 13:23:22  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 13:23:22  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 10.15 ms
+PING_RECV       | 2026-08-08 13:23:46  | Received PING from ('127.0.0.1', 11552)
+ANNOUNCE        | 2026-08-08 13:23:49  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 13:23:50  | [Transferring_These_Files] Sending periodic update to tracker...
+HEARTBEAT_SYNC  | 2026-08-08 13:23:52  | Initiating periodic ping to 1 known peers
+PING_SEND       | 2026-08-08 13:23:52  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 13:23:52  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 15.76 ms
+PING_RECV       | 2026-08-08 13:24:17  | Received PING from ('127.0.0.1', 11578)
+ANNOUNCE        | 2026-08-08 13:24:19  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 13:24:20  | [Transferring_These_Files] Sending periodic update to tracker...
+HEARTBEAT_SYNC  | 2026-08-08 13:24:22  | Initiating periodic ping to 1 known peers
+PING_SEND       | 2026-08-08 13:24:22  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 13:24:22  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 16.81 ms
+PING_RECV       | 2026-08-08 13:24:47  | Received PING from ('127.0.0.1', 11592)
+ANNOUNCE        | 2026-08-08 13:24:49  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 13:24:50  | [Transferring_These_Files] Sending periodic update to tracker...
+HEARTBEAT_SYNC  | 2026-08-08 13:24:52  | Initiating periodic ping to 1 known peers
+PING_SEND       | 2026-08-08 13:24:52  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 13:24:52  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 25.03 ms
+PING_RECV       | 2026-08-08 13:25:17  | Received PING from ('127.0.0.1', 11606)
+ANNOUNCE        | 2026-08-08 13:25:19  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 13:25:20  | [Transferring_These_Files] Sending periodic update to tracker...
+HEARTBEAT_SYNC  | 2026-08-08 13:25:22  | Initiating periodic ping to 1 known peers
+PING_SEND       | 2026-08-08 13:25:22  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 13:25:22  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 27.21 ms
+PING_RECV       | 2026-08-08 13:25:47  | Received PING from ('127.0.0.1', 11637)
+ANNOUNCE        | 2026-08-08 13:25:49  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+SHUTDOWN_INIT   | 2026-08-08 13:25:50  | Keyboard interrupt received. Deregistering from tracker.
+PORT_BUSY       | 2026-08-08 13:26:04  | Port 6881 in use. Trying next...
+PORT_BUSY       | 2026-08-08 13:26:04  | Port 6882 in use. Trying next...
+LISTENER_START  | 2026-08-08 13:26:04  | Peer listening for direct connections on port 6883
+FILE_CHECK      | 2026-08-08 13:26:05  | Determined status as SEEDER for Transferring_These_Files/sample3.png
+HANDSHAKE_SEND  | 2026-08-08 13:26:05  | [Transferring_These_Files/sample3.png] Initiating handshake with 127.0.0.1:6882
+HANDSHAKE_SUCCESS | 2026-08-08 13:26:05  | [Transferring_These_Files/sample3.png] Handshake successful with -AA0001-WL99b7svcXnQ
+MSG_RECV        | 2026-08-08 13:26:05  | Received Bitfield from 127.0.0.1:6882
+FILE_CHECK      | 2026-08-08 13:26:06  | Determined status as LEECHER for Transferring_These_Files
+HANDSHAKE_SEND  | 2026-08-08 13:26:06  | [Transferring_These_Files] Initiating handshake with 127.0.0.1:6882
+HANDSHAKE_SUCCESS | 2026-08-08 13:26:06  | [Transferring_These_Files] Handshake successful with -AA0001-WL99b7svcXnQ
+MSG_RECV        | 2026-08-08 13:26:06  | Received Bitfield from 127.0.0.1:6882
+SYSTEM_READY    | 2026-08-08 13:26:07  | All torrent threads processed. Entering heartbeat loop.
+HANDSHAKE_RECV  | 2026-08-08 13:26:29  | Handshake verified from -AA0001-WL99b7svcXnQ
+MSG_RECV        | 2026-08-08 13:26:29  | Received Bitfield from 127.0.0.1:11669
+HANDSHAKE_RECV  | 2026-08-08 13:26:29  | Handshake verified from -AA0001-WL99b7svcXnQ
+MSG_RECV        | 2026-08-08 13:26:29  | Received Bitfield from 127.0.0.1:11671
+PING_RECV       | 2026-08-08 13:26:30  | Received PING from ('127.0.0.1', 11672)
+ANNOUNCE        | 2026-08-08 13:26:35  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 13:26:36  | [Transferring_These_Files] Sending periodic update to tracker...
+HEARTBEAT_SYNC  | 2026-08-08 13:26:37  | Initiating periodic ping to 1 known peers
+PING_SEND       | 2026-08-08 13:26:37  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 13:26:37  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 11.20 ms
+PING_RECV       | 2026-08-08 13:27:00  | Received PING from ('127.0.0.1', 11692)
+ANNOUNCE        | 2026-08-08 13:27:05  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 13:27:06  | [Transferring_These_Files] Sending periodic update to tracker...
+HEARTBEAT_SYNC  | 2026-08-08 13:27:07  | Initiating periodic ping to 1 known peers
+PING_SEND       | 2026-08-08 13:27:07  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 13:27:07  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 18.31 ms
+SHUTDOWN_INIT   | 2026-08-08 13:27:25  | Keyboard interrupt received. Deregistering from tracker.
+PORT_BUSY       | 2026-08-08 13:27:36  | Port 6881 in use. Trying next...
+PORT_BUSY       | 2026-08-08 13:27:36  | Port 6882 in use. Trying next...
+LISTENER_START  | 2026-08-08 13:27:36  | Peer listening for direct connections on port 6883
+FILE_CHECK      | 2026-08-08 13:27:37  | Determined status as SEEDER for Transferring_These_Files/sample3.png
+HANDSHAKE_SEND  | 2026-08-08 13:27:37  | [Transferring_These_Files/sample3.png] Initiating handshake with 127.0.0.1:6882
+HANDSHAKE_SUCCESS | 2026-08-08 13:27:37  | [Transferring_These_Files/sample3.png] Handshake successful with -AA0001-WL99b7svcXnQ
+MSG_RECV        | 2026-08-08 13:27:37  | Received Bitfield from 127.0.0.1:6882
+FILE_CHECK      | 2026-08-08 13:27:38  | Determined status as LEECHER for Transferring_These_Files
+HANDSHAKE_SEND  | 2026-08-08 13:27:38  | [Transferring_These_Files] Initiating handshake with 127.0.0.1:6882
+HANDSHAKE_SUCCESS | 2026-08-08 13:27:38  | [Transferring_These_Files] Handshake successful with -AA0001-WL99b7svcXnQ
+MSG_RECV        | 2026-08-08 13:27:38  | Received Bitfield from 127.0.0.1:6882
+SYSTEM_READY    | 2026-08-08 13:27:39  | All torrent threads processed. Entering heartbeat loop.
+HANDSHAKE_RECV  | 2026-08-08 13:27:59  | Handshake verified from -AA0001-WL99b7svcXnQ
+MSG_RECV        | 2026-08-08 13:27:59  | Received Bitfield from 127.0.0.1:11733
+HANDSHAKE_RECV  | 2026-08-08 13:28:00  | Handshake verified from -AA0001-WL99b7svcXnQ
+MSG_RECV        | 2026-08-08 13:28:00  | Received Bitfield from 127.0.0.1:11739
+PING_RECV       | 2026-08-08 13:28:01  | Received PING from ('127.0.0.1', 11740)
+ANNOUNCE        | 2026-08-08 13:28:07  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 13:28:08  | [Transferring_These_Files] Sending periodic update to tracker...
+HEARTBEAT_SYNC  | 2026-08-08 13:28:09  | Initiating periodic ping to 1 known peers
+PING_SEND       | 2026-08-08 13:28:09  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 13:28:10  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 29.03 ms
+HANDSHAKE_RECV  | 2026-08-08 13:28:11  | Handshake verified from -AA0001-WL99b7svcXnQ
+MSG_RECV        | 2026-08-08 13:28:11  | Received Bitfield from 127.0.0.1:11751
+HANDSHAKE_RECV  | 2026-08-08 13:28:12  | Handshake verified from -AA0001-WL99b7svcXnQ
+MSG_RECV        | 2026-08-08 13:28:12  | Received Bitfield from 127.0.0.1:11755
+ANNOUNCE        | 2026-08-08 13:28:37  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 13:28:38  | [Transferring_These_Files] Sending periodic update to tracker...
+HEARTBEAT_SYNC  | 2026-08-08 13:28:40  | Initiating periodic ping to 1 known peers
+PING_SEND       | 2026-08-08 13:28:40  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_FAIL       | 2026-08-08 13:28:42  | [Heartbeat] Failed to ping 127.0.0.1:6882 - timed out
+HANDSHAKE_RECV  | 2026-08-08 13:28:55  | Handshake verified from -AA0001-WL99b7svcXnQ
+MSG_RECV        | 2026-08-08 13:28:55  | Received Bitfield from 127.0.0.1:11792
+HANDSHAKE_RECV  | 2026-08-08 13:28:56  | Handshake verified from -AA0001-WL99b7svcXnQ
+MSG_RECV        | 2026-08-08 13:28:56  | Received Bitfield from 127.0.0.1:11794
+ANNOUNCE        | 2026-08-08 13:29:07  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 13:29:08  | [Transferring_These_Files] Sending periodic update to tracker...
+HEARTBEAT_SYNC  | 2026-08-08 13:29:12  | Initiating periodic ping to 1 known peers
+PING_SEND       | 2026-08-08 13:29:12  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_FAIL       | 2026-08-08 13:29:14  | [Heartbeat] Failed to ping 127.0.0.1:6882 - timed out
+ANNOUNCE        | 2026-08-08 13:29:38  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 13:29:38  | [Transferring_These_Files] Sending periodic update to tracker...
+HEARTBEAT_SYNC  | 2026-08-08 13:29:44  | Initiating periodic ping to 1 known peers
+PING_SEND       | 2026-08-08 13:29:44  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_FAIL       | 2026-08-08 13:29:46  | [Heartbeat] Failed to ping 127.0.0.1:6882 - timed out
+ANNOUNCE        | 2026-08-08 13:30:08  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 13:30:09  | [Transferring_These_Files] Sending periodic update to tracker...
+SHUTDOWN_INIT   | 2026-08-08 13:30:10  | Keyboard interrupt received. Deregistering from tracker.
+LISTENER_START  | 2026-08-08 13:30:12  | Peer listening for direct connections on port 6881
+FILE_CHECK      | 2026-08-08 13:30:13  | Determined status as SEEDER for Transferring_These_Files/sample3.png
+FILE_CHECK      | 2026-08-08 13:30:14  | Determined status as LEECHER for Transferring_These_Files
+SYSTEM_READY    | 2026-08-08 13:30:15  | All torrent threads processed. Entering heartbeat loop.
+HANDSHAKE_RECV  | 2026-08-08 13:30:28  | Handshake verified from -AA0001-WL99b7svcXnQ
+MSG_RECV        | 2026-08-08 13:30:28  | Received Bitfield from 127.0.0.1:11844
+HANDSHAKE_RECV  | 2026-08-08 13:30:29  | Handshake verified from -AA0001-WL99b7svcXnQ
+MSG_RECV        | 2026-08-08 13:30:29  | Received Bitfield from 127.0.0.1:11846
+SHUTDOWN_INIT   | 2026-08-08 13:30:43  | Keyboard interrupt received. Deregistering from tracker.
+LISTENER_START  | 2026-08-08 13:31:45  | Peer listening for direct connections on port 6881
+FILE_CHECK      | 2026-08-08 13:31:46  | Determined status as SEEDER for Transferring_These_Files/sample3.png
+FILE_CHECK      | 2026-08-08 13:31:47  | Determined status as LEECHER for Transferring_These_Files
+SYSTEM_READY    | 2026-08-08 13:31:48  | All torrent threads processed. Entering heartbeat loop.
+HANDSHAKE_RECV  | 2026-08-08 13:31:56  | Handshake verified from -AA0001-WL99b7svcXnQ
+MSG_RECV        | 2026-08-08 13:31:56  | Received Bitfield from 127.0.0.1:11870
+HANDSHAKE_RECV  | 2026-08-08 13:31:57  | Handshake verified from -AA0001-WL99b7svcXnQ
+MSG_RECV        | 2026-08-08 13:31:57  | Received Bitfield from 127.0.0.1:11872
+ANNOUNCE        | 2026-08-08 13:32:16  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+NEW_PEER        | 2026-08-08 13:32:16  | [Transferring_These_Files/sample3.png] Discovered new peer 127.0.0.1:6882 from tracker update
+HANDSHAKE_SEND  | 2026-08-08 13:32:16  | [Transferring_These_Files/sample3.png] Initiating handshake with 127.0.0.1:6882
+HANDSHAKE_SUCCESS | 2026-08-08 13:32:16  | [Transferring_These_Files/sample3.png] Handshake successful with -AA0001-WL99b7svcXnQ
+MSG_RECV        | 2026-08-08 13:32:16  | Received Bitfield from 127.0.0.1:6882
+ANNOUNCE        | 2026-08-08 13:32:17  | [Transferring_These_Files] Sending periodic update to tracker...
+NEW_PEER        | 2026-08-08 13:32:17  | [Transferring_These_Files] Discovered new peer 127.0.0.1:6882 from tracker update
+HANDSHAKE_SEND  | 2026-08-08 13:32:17  | [Transferring_These_Files] Initiating handshake with 127.0.0.1:6882
+HANDSHAKE_SUCCESS | 2026-08-08 13:32:17  | [Transferring_These_Files] Handshake successful with -AA0001-WL99b7svcXnQ
+MSG_RECV        | 2026-08-08 13:32:17  | Received Bitfield from 127.0.0.1:6882
+HEARTBEAT_SYNC  | 2026-08-08 13:32:18  | Initiating periodic ping to 1 known peers
+PING_SEND       | 2026-08-08 13:32:18  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 13:32:18  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 17.01 ms
+PING_RECV       | 2026-08-08 13:32:28  | Received PING from ('127.0.0.1', 11892)
+ANNOUNCE        | 2026-08-08 13:32:46  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 13:32:47  | [Transferring_These_Files] Sending periodic update to tracker...
+HEARTBEAT_SYNC  | 2026-08-08 13:32:48  | Initiating periodic ping to 1 known peers
+PING_SEND       | 2026-08-08 13:32:48  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 13:32:48  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 28.53 ms
+ANNOUNCE        | 2026-08-08 13:33:17  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 13:33:18  | [Transferring_These_Files] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 13:33:47  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 13:33:48  | [Transferring_These_Files] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 13:34:17  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 13:34:18  | [Transferring_These_Files] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 13:34:47  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 13:34:48  | [Transferring_These_Files] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 13:35:17  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 13:35:18  | [Transferring_These_Files] Sending periodic update to tracker...
+HEARTBEAT_SYNC  | 2026-08-08 13:35:35  | Initiating periodic ping to 1 known peers
+PING_SEND       | 2026-08-08 13:35:35  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 13:35:35  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 13.37 ms
+PING_RECV       | 2026-08-08 13:35:38  | Received PING from ('127.0.0.1', 12004)
+SHUTDOWN_INIT   | 2026-08-08 13:35:40  | Keyboard interrupt received. Deregistering from tracker.
+LISTENER_START  | 2026-08-08 13:35:50  | Peer listening for direct connections on port 6881
+FILE_CHECK      | 2026-08-08 13:35:51  | Determined status as SEEDER for Transferring_These_Files/sample3.png
+FILE_CHECK      | 2026-08-08 13:35:52  | Determined status as LEECHER for Transferring_These_Files
+SYSTEM_READY    | 2026-08-08 13:35:53  | All torrent threads processed. Entering heartbeat loop.
+HANDSHAKE_RECV  | 2026-08-08 13:35:58  | Handshake verified from -AA0001-WL99b7svcXnQ
+STATE_CHANGE    | 2026-08-08 13:35:58  | Sent UNCHOKE to 127.0.0.1:12019
+HANDSHAKE_RECV  | 2026-08-08 13:35:59  | Handshake verified from -AA0001-WL99b7svcXnQ
+STATE_CHANGE    | 2026-08-08 13:35:59  | Sent INTERESTED to 127.0.0.1:12023
+ANNOUNCE        | 2026-08-08 13:36:21  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+NEW_PEER        | 2026-08-08 13:36:21  | [Transferring_These_Files/sample3.png] Discovered new peer 127.0.0.1:6882 from tracker update
+HANDSHAKE_SEND  | 2026-08-08 13:36:21  | [Transferring_These_Files/sample3.png] Initiating handshake with 127.0.0.1:6882
+ANNOUNCE        | 2026-08-08 13:36:22  | [Transferring_These_Files] Sending periodic update to tracker...
+NEW_PEER        | 2026-08-08 13:36:22  | [Transferring_These_Files] Discovered new peer 127.0.0.1:6882 from tracker update
+HANDSHAKE_SEND  | 2026-08-08 13:36:22  | [Transferring_These_Files] Initiating handshake with 127.0.0.1:6882
+HEARTBEAT_SYNC  | 2026-08-08 13:36:23  | Initiating periodic ping to 1 known peers
+PING_SEND       | 2026-08-08 13:36:23  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+HANDSHAKE_FAIL  | 2026-08-08 13:36:24  | [Transferring_These_Files/sample3.png] Failed handshake with 127.0.0.1:6882 - timed out
+PING_FAIL       | 2026-08-08 13:36:25  | [Heartbeat] Failed to ping 127.0.0.1:6882 - timed out
+HANDSHAKE_FAIL  | 2026-08-08 13:36:25  | [Transferring_These_Files] Failed handshake with 127.0.0.1:6882 - timed out
+ANNOUNCE        | 2026-08-08 13:36:54  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+HEARTBEAT_SYNC  | 2026-08-08 13:36:55  | Initiating periodic ping to 1 known peers
+PING_SEND       | 2026-08-08 13:36:55  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+ANNOUNCE        | 2026-08-08 13:36:55  | [Transferring_These_Files] Sending periodic update to tracker...
+PING_FAIL       | 2026-08-08 13:36:57  | [Heartbeat] Failed to ping 127.0.0.1:6882 - timed out
+ANNOUNCE        | 2026-08-08 13:37:24  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 13:37:25  | [Transferring_These_Files] Sending periodic update to tracker...
+HEARTBEAT_SYNC  | 2026-08-08 13:37:27  | Initiating periodic ping to 1 known peers
+PING_SEND       | 2026-08-08 13:37:27  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_RECV       | 2026-08-08 13:37:28  | Received PING from ('127.0.0.1', 12070)
+PING_SUCCESS    | 2026-08-08 13:37:28  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 896.19 ms
+ANNOUNCE        | 2026-08-08 13:37:54  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 13:37:55  | [Transferring_These_Files] Sending periodic update to tracker...
+HEARTBEAT_SYNC  | 2026-08-08 13:37:58  | Initiating periodic ping to 1 known peers
+PING_RECV       | 2026-08-08 13:37:58  | Received PING from ('127.0.0.1', 12089)
+PING_SEND       | 2026-08-08 13:37:58  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 13:37:58  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 14.96 ms
+SHUTDOWN_INIT   | 2026-08-08 13:38:00  | Keyboard interrupt received. Deregistering from tracker.
+LISTENER_START  | 2026-08-08 13:40:02  | Peer listening for direct connections on port 6881
+FILE_CHECK      | 2026-08-08 13:40:03  | Determined status as SEEDER for Transferring_These_Files/sample3.png
+FILE_CHECK      | 2026-08-08 13:40:04  | Determined status as LEECHER for Transferring_These_Files
+SYSTEM_READY    | 2026-08-08 13:40:05  | All torrent threads processed. Entering heartbeat loop.
+HANDSHAKE_RECV  | 2026-08-08 13:40:25  | Handshake verified from -AA0001-WL99b7svcXnQ
+STATE_CHANGE    | 2026-08-08 13:40:25  | Sent UNCHOKE to 127.0.0.1:12154
+HANDSHAKE_RECV  | 2026-08-08 13:40:26  | Handshake verified from -AA0001-WL99b7svcXnQ
+STATE_CHANGE    | 2026-08-08 13:40:26  | Sent INTERESTED to 127.0.0.1:12158
+ANNOUNCE        | 2026-08-08 13:40:34  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+NEW_PEER        | 2026-08-08 13:40:34  | [Transferring_These_Files/sample3.png] Discovered new peer 127.0.0.1:6882 from tracker update
+HANDSHAKE_SEND  | 2026-08-08 13:40:34  | [Transferring_These_Files/sample3.png] Initiating handshake with 127.0.0.1:6882
+HANDSHAKE_SUCCESS | 2026-08-08 13:40:34  | [Transferring_These_Files/sample3.png] Handshake successful with -AA0001-WL99b7svcXnQ
+STATE_CHANGE    | 2026-08-08 13:40:34  | Sent UNCHOKE to 127.0.0.1:6882
+ANNOUNCE        | 2026-08-08 13:40:35  | [Transferring_These_Files] Sending periodic update to tracker...
+NEW_PEER        | 2026-08-08 13:40:35  | [Transferring_These_Files] Discovered new peer 127.0.0.1:6882 from tracker update
+HANDSHAKE_SEND  | 2026-08-08 13:40:35  | [Transferring_These_Files] Initiating handshake with 127.0.0.1:6882
+HANDSHAKE_SUCCESS | 2026-08-08 13:40:35  | [Transferring_These_Files] Handshake successful with -AA0001-WL99b7svcXnQ
+STATE_CHANGE    | 2026-08-08 13:40:35  | Sent INTERESTED to 127.0.0.1:6882
+HEARTBEAT_SYNC  | 2026-08-08 13:40:35  | Initiating periodic ping to 1 known peers
+PING_SEND       | 2026-08-08 13:40:35  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 13:40:36  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 33.09 ms
+PING_RECV       | 2026-08-08 13:40:57  | Received PING from ('127.0.0.1', 12169)
+ANNOUNCE        | 2026-08-08 13:41:04  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 13:41:05  | [Transferring_These_Files] Sending periodic update to tracker...
+HEARTBEAT_SYNC  | 2026-08-08 13:41:06  | Initiating periodic ping to 1 known peers
+PING_SEND       | 2026-08-08 13:41:06  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 13:41:06  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 13.36 ms
+PING_RECV       | 2026-08-08 13:41:27  | Received PING from ('127.0.0.1', 12193)
+ANNOUNCE        | 2026-08-08 13:41:34  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 13:41:35  | [Transferring_These_Files] Sending periodic update to tracker...
+HEARTBEAT_SYNC  | 2026-08-08 13:41:36  | Initiating periodic ping to 1 known peers
+PING_SEND       | 2026-08-08 13:41:36  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 13:41:36  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 17.39 ms
+PING_RECV       | 2026-08-08 13:41:57  | Received PING from ('127.0.0.1', 12205)
+ANNOUNCE        | 2026-08-08 13:42:04  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 13:42:05  | [Transferring_These_Files] Sending periodic update to tracker...
+HEARTBEAT_SYNC  | 2026-08-08 13:42:06  | Initiating periodic ping to 1 known peers
+PING_SEND       | 2026-08-08 13:42:06  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 13:42:06  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 21.15 ms
+PING_RECV       | 2026-08-08 13:42:28  | Received PING from ('127.0.0.1', 12221)
+ANNOUNCE        | 2026-08-08 13:42:34  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 13:42:35  | [Transferring_These_Files] Sending periodic update to tracker...
+HEARTBEAT_SYNC  | 2026-08-08 13:42:36  | Initiating periodic ping to 1 known peers
+PING_SEND       | 2026-08-08 13:42:36  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 13:42:36  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 15.46 ms
+PING_RECV       | 2026-08-08 13:42:58  | Received PING from ('127.0.0.1', 12237)
+ANNOUNCE        | 2026-08-08 13:43:04  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 13:43:05  | [Transferring_These_Files] Sending periodic update to tracker...
+HEARTBEAT_SYNC  | 2026-08-08 13:43:06  | Initiating periodic ping to 1 known peers
+PING_SEND       | 2026-08-08 13:43:06  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 13:43:06  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 16.99 ms
+PING_RECV       | 2026-08-08 13:43:28  | Received PING from ('127.0.0.1', 12283)
+ANNOUNCE        | 2026-08-08 13:43:34  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 13:43:35  | [Transferring_These_Files] Sending periodic update to tracker...
+HEARTBEAT_SYNC  | 2026-08-08 13:43:36  | Initiating periodic ping to 1 known peers
+PING_SEND       | 2026-08-08 13:43:36  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 13:43:36  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 21.04 ms
+PING_RECV       | 2026-08-08 13:43:58  | Received PING from ('127.0.0.1', 12300)
+ANNOUNCE        | 2026-08-08 13:44:04  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 13:44:05  | [Transferring_These_Files] Sending periodic update to tracker...
+HEARTBEAT_SYNC  | 2026-08-08 13:44:06  | Initiating periodic ping to 1 known peers
+PING_SEND       | 2026-08-08 13:44:06  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 13:44:06  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 15.07 ms
+PING_RECV       | 2026-08-08 13:44:28  | Received PING from ('127.0.0.1', 12310)
+ANNOUNCE        | 2026-08-08 13:44:34  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 13:44:35  | [Transferring_These_Files] Sending periodic update to tracker...
+HEARTBEAT_SYNC  | 2026-08-08 13:44:36  | Initiating periodic ping to 1 known peers
+PING_SEND       | 2026-08-08 13:44:36  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 13:44:36  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 13.05 ms
+ANNOUNCE        | 2026-08-08 13:45:04  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 13:45:05  | [Transferring_These_Files] Sending periodic update to tracker...
+SHUTDOWN_INIT   | 2026-08-08 13:45:05  | Keyboard interrupt received. Deregistering from tracker.

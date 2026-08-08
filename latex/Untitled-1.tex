@@ -1,0 +1,777 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{fancyhdr}
+\usepackage{listings}
+\usepackage{subcaption}
+\usepackage{xcolor}
+\usepackage{pgfplots}
+\usepackage{longtable}
+
+\definecolor{codegray}{rgb}{0.95,0.95,0.95}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codeblue}{rgb}{0,0,0.6}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+
+% Code block styling to look professional
+\lstdefinelanguage{json}{
+    basicstyle=\ttfamily\footnotesize,
+    commentstyle=\color{codegreen},
+    stringstyle=\color{codepurple},
+    keywordstyle=\color{codeblue},
+    showstringspaces=false,
+    breaklines=true,
+    backgroundcolor=\color{codegray},
+    frame=single,
+    rulecolor=\color{lightgray}
+}
+
+\lstdefinestyle{pythonstyle}{
+    language=Python,
+    backgroundcolor=\color{codegray},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{codeblue},
+    numberstyle=\tiny\color{gray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=4,
+    frame=single,
+    rulecolor=\color{lightgray}
+}
+
+
+\geometry{margin=1in}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Final Project}
+\fancyhead[R]{\thepage}
+
+\begin{document}
+
+\begin{titlepage}
+    \centering
+    \vspace*{1cm}
+    
+    {\Huge \textbf{Data Networks}}\\[1.5cm]
+
+    \begin{figure}[ht]
+        \centering
+        % Replace with actual university logo
+        \includegraphics[width=0.4\textwidth]{Images/logo.jpg}
+    \end{figure}
+
+    \vspace{1cm}
+    {\Large \textbf{BitTorent, A peer to peer file sharing system}}\\[0.5cm]
+
+    \textbf{Department of Electrical Engineering} \\ 
+    Sharif University of Technology \\[0.5cm]
+    \textbf{Instructor: Dr. Mohammad Reza Pakravan} \\[2.0cm]
+    
+    \textbf{Submitted by:} \\[0.5cm]
+    {\Large Amirali Yazdiani - 402102765} \\[1.5cm]
+
+    \vfill
+    \textbf{Date:} \\
+    Aug 2026
+\end{titlepage}
+
+\newpage
+\tableofcontents
+\newpage
+
+\section{Torrent File Generation}
+\subsection{Implementation}
+
+To meet the project requirement of having human readable and modifiable Metainfo (.torrent) files, the initial configurations were defined using JSON format. 
+This approach simplifies testing and parameter modification by avoiding direct hex or binary editing. 
+
+Two distinct JSON templates were developed to handle both multi and single file torrent architectures, as illustrated bellow.
+
+\begin{lstlisting}[language=json, numbers=none, caption={Multi File Torrent}] 
+{
+  "announce": "http://127.0.0.1:8000/announce",
+  "info": {
+    "name": "Transferring_These_Files",
+    "piece length": 262144,
+    "pieces": "",
+    "files": [
+      {
+        "length": 1116449,
+        "path": ["sample1.png"]
+      },
+      {
+        "length": 1455741,
+        "path": ["sample2.png"]
+      }
+    ]
+  }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=json, numbers=none, caption={Single File Torrent}] 
+{
+  "announce": "http://127.0.0.1:8000/announce",
+  "info": {
+    "name": "Transferring_These_Files/sample3.png",
+    "length": 1455741,
+    "piece length": 262144,
+    "pieces": ""
+  }
+}
+\end{lstlisting}
+
+To convert these JSON structures into standard bencoded torrent files, a Python script (\hyperref[app:torrent_gen]{\texttt{torrent\_generator.py}}) was implemented. The script executes the following data pipeline:
+\begin{itemize}
+    \item Parses the JSON configuration to extract the file structures, target paths, and the specified \texttt{piece length}.
+    \item Maps the parsed paths to the actual physical files within the local directory.
+    \item Iterates over the files, reading them in discrete byte chunks according to the \texttt{piece length}.
+    \item Computes the SHA-1 hash for each chunk and concatenates them to form the final \texttt{pieces} byte string.
+    \item Injects this hash string back into the dictionary, encodes the entire structure using the Bencode standard, and writes the output to a text file.
+\end{itemize}
+
+Executing this script on the provided JSON files successfully generates \texttt{torrent.txt}. 
+These generated bencoded files serve as the baseline Metainfo fed into the tracker and peer instances for the remainder of the simulation. All related implementation files and outputs for this phase are contained within the \texttt{torrent generator} directory.
+
+\subsection{Why Bencoded Format?}
+
+The decision to serialize the Metainfo file using the Bencode format, rather than retaining it as standard JSON, is driven by the strict requirements of the BitTorrent protocol. 
+
+While JSON is highly suitable for human readable configurations, it lacks native support for raw binary data, such as the concatenated SHA-1 byte strings residing in the \texttt{pieces} field. Bencoding resolves this by seamlessly handling both ASCII text and arbitrary byte arrays through explicit length prefixing. 
+
+Furthermore, Bencoding enforces strict deterministic serialization by lexicographically sorting dictionary keys. This determinism is critical from a network engineering perspective: the \texttt{info\_hash} parameter, which peers use to identify the torrent to the tracker, is computed by hashing the exact byte sequence of the bencoded \texttt{info} dictionary. 
+Any variation in key ordering or whitespace, which JSON inherently allows would result in a completely different hash, fundamentally breaking the peer discovery mechanism.
+
+
+\section{Tracker Web Service Implementation}
+The tracker serves as the centralized coordinator for the BitTorrent network. It does not participate in the actual file transfer but acts as a discovery service, maintaining the state of the swarm and enabling peers to locate each other. 
+The complete implementation of this service is provided in Appendix (\hyperref[app:tracker_code]{\texttt{Tracker.py}}).
+
+From an engineering perspective, the tracker was designed with three primary considerations: concurrency, efficient state management, and strict protocol adherence.
+
+\subsection{Concurrency and Architecture}
+In a practical P2P environment, the tracker must handle simultaneous \texttt{GET} requests from numerous peers without blocking. To achieve this, the service is built upon Python's \texttt{ThreadingHTTPServer}. This architecture assigns a separate thread to each incoming HTTP request, ensuring that the tracker remains highly responsive even during swarm initialization bursts. 
+
+\subsection{State Management (Swarm Database)}
+The state of the network is maintained in memory using a dictionary data structure (\texttt{swarm\_db}). The database uses the \texttt{info\_hash} of the torrents as keys, mapping each hash to a list of active peer dictionaries (containing \texttt{peer\_id}, \texttt{ip}, and \texttt{port}). 
+
+While a persistent database (like SQL) could be used for a production scale tracker, an in memory dictionary provides the necessary $O(1)$ lookup time and is highly optimal for the scope of this simulation.
+
+\subsection{Request Parsing and Event Handling}
+When a peer connects to the \texttt{/announce} endpoint, the \texttt{TrackerHandler} parses the URL-encoded query parameters. The logic explicitly handles three critical events defined by the BitTorrent protocol:
+\begin{itemize}
+    \item \textbf{\texttt{started}:} Registers a new peer in the \texttt{swarm\_db} or updates its port if it already exists.
+    \item \textbf{\texttt{completed}:} Flags the peer as a "seeder" (by logically treating \texttt{left = 0}). This is vital for tracking the ratio of seeders to leechers.
+    \item \textbf{\texttt{stopped}:} Facilitates a graceful exit. The tracker actively removes the peer from the swarm list, preventing the distribution of dead IP addresses to other peers and thereby maintaining swarm health.
+\end{itemize}
+
+\subsection{Bencoded Response and Logging}
+Once the swarm state is updated, the tracker dynamically generates a response containing the tracker \texttt{interval}, the count of complete/incomplete peers, and the requested peer list. 
+
+Crucially, this dictionary is serialized into a Bencode format before transmission via the HTTP \texttt{200 OK} response, ensuring compatibility with standard BitTorrent clients. Throughout this lifecycle, a custom \texttt{BitTorrentLogger} synchronously records all network events, parameter anomalies, and HTTP responses to a local log file for offline debugging.
+
+
+\section{Peer Client Implementation}
+The peer client is the core entity in the BitTorrent ecosystem, responsible for interacting with the tracker and establishing direct communication with other peers. 
+
+The complete implementation for this module is provided in Appendix (\hyperref[app:peer_code]{\texttt{peer.py}}). This design leverages threading to achieve concurrent execution and robust network management.
+
+\subsection{Client Initialization and Port Binding}
+Upon execution, the peer randomly generates a 20 byte \texttt{peer\_id} (starting with \texttt{-AA0001-}) to uniquely identify itself across the swarm.
+
+A dedicated listener thread is spawned immediately to handle incoming direct TCP connections from other peers. According to the BitTorrent protocol specification, the client attempts to bind its listening socket to port 6881. 
+If this port is occupied, the application iteratively attempts sequential ports up to 6889, terminating gracefully if all predefined ports are exhausted.
+
+\subsection{Torrent Thread Pool and Network Interaction}
+A critical requirement of this project was the implementation of a Torrent Thread Pool, enabling a single peer instance to process multiple \texttt{.torrent} files simultaneously. For each torrent file:
+\begin{enumerate}
+    \item \textbf{Parsing and Hashing:} The thread decodes the bencoded Metainfo, extracts the \texttt{announce} URL, and computes the strictly deterministic SHA-1 \texttt{info\_hash} from the raw bytes of the \texttt{info} dictionary.
+    \item \textbf{Tracker Registration:} An initial HTTP \texttt{GET} request is dispatched to the tracker with the \texttt{started} event, passing required parameters including the \texttt{info\_hash}, \texttt{peer\_id}, and the successfully bound listening port.
+    \item \textbf{Periodic Announcing:} After the initial response, the thread enters a loop governed by the tracker's \texttt{interval} parameter, repeatedly querying the tracker for swarm state updates to discover newly joined peers.
+\end{enumerate}
+
+\subsection{End to End Peer Communication (Ping Protocol)}
+To validate the peer discovery mechanism and ensure end to end connectivity, a lightweight ping protocol was implemented. 
+
+When a peer receives an IP and port pair from the tracker, it cross references its local \texttt{known\_peers} set to prevent redundant operations. 
+If the peer is novel, an asynchronous socket connection is initiated to the target address, transmitting a binary \texttt{PING} message. The receiving peer's listener thread actively intercepts this packet and returns a \texttt{PONG} acknowledgment. 
+
+The originating thread then logs the successful Round Trip Time (RTT), confirming bidirectional functionality at the application layer independent of the tracker.
+
+\subsection{Graceful Shutdown}
+Handling network disconnections gracefully is paramount to preventing zombie states within the tracker's database. By capturing \texttt{KeyboardInterrupt} signals, the client enforces a strict exit protocol. It iterates through all active torrents and dispatches a final HTTP \texttt{GET} request with the \texttt{event=stopped} parameter. This actively deregisters the client, maintaining the integrity and accuracy of the tracker's peer lists.
+
+
+\section{System Logging and Event Tracking}
+Debugging distributed systems, particularly asynchronous peer to peer protocols, requires a robust and structured logging mechanism. Standard console outputs are insufficient and often misleading when multiple threads and distinct network entities (the tracker and various peers) operate concurrently. 
+
+To address this, a centralized and modular logging utility, \texttt{logger.py}, was developed. The complete implementation is available in Appendix (\hyperref[app:logger_code]{\texttt{logger.py}}).
+
+\subsection{Logger Architecture and Isolation}
+The \texttt{BitTorrentLogger} class is designed to enforce a strict separation of concerns. Upon instantiation, it categorizes logs based on the \texttt{component\_type} parameter (Tracker or Peer) and dynamically generates a structured directory tree under the \texttt{logs/} directory. 
+
+This architectural choice ensures physical file isolation, preventing log contamination during local swarm simulations where multiple peer instances run simultaneously on the same machine.
+
+\subsection{Formatting and Metadata Management}
+To strictly comply with the project specifications, the logger formats the output file into distinct Header and Body sections.
+\begin{itemize}
+    \item \textbf{Header:} Stores critical metadata including the exact filename, the initial creation timestamp, and a dynamically updated Last Modified timestamp.
+    \item \textbf{Body:} Utilizes a tabulated architecture for the actual event logs. It categorizes entries by \texttt{Event Type} (\texttt{SERVER\_START}, \texttt{PING\_SUCCESS}, \texttt{ERROR}), \texttt{Date/Time}, and provides a detailed \texttt{Description} of the network transaction.
+\end{itemize}
+
+A notable engineering detail in this implementation is the \texttt{\_update\_last\_modified()} method. Rather than merely appending data to the end of the file, this method actively parses the file to rewrite the header's modification timestamp upon every new \texttt{log\_event()} method call. 
+This strict temporal tracking ensures the log file's metadata perfectly reflects the boundaries of the network simulation.
+
+\newpage
+\appendix
+\section{Python Source Codes}
+
+\subsection{Torrent Generator Script}\label{app:torrent_gen}
+This section contains the implementation of the script used to generate bencoded torrent files from JSON configurations.
+
+\textbf{Code Listing 1: \texttt{torrent\_generator.py}}
+\begin{lstlisting}[style=pythonstyle]
+import json
+import bencode
+import os
+import hashlib
+
+### Creating Hash
+def generate_real_pieces(file_path, piece_length):
+    pieces = b""
+    if not os.path.exists(file_path):
+        print(f"[-] Warning: File '{file_path}' not found. Generating dummy pieces.")
+        return b'\x00' * 20 
+
+    with open(file_path, 'rb') as f:
+        while True:
+            chunk = f.read(piece_length)
+            if not chunk:
+                break
+            pieces += hashlib.sha1(chunk).digest()
+            
+    return pieces
+
+def create_torrent_from_json(json_path, output_torrent_path):
+    print(f"[*] Reading human-readable config from: {json_path}")
+    
+    with open(json_path, 'r', encoding='utf-8') as f:
+        torrent_dict = json.load(f)
+    
+    ### If Single File
+    if 'info' in torrent_dict and 'name' in torrent_dict['info'] and 'files' not in torrent_dict['info']:
+        file_name = torrent_dict['info']['name']
+        piece_length = torrent_dict['info']['piece length']
+        
+        ### Build Hash
+        real_pieces = generate_real_pieces(file_name, piece_length)
+        torrent_dict['info']['pieces'] = real_pieces
+        
+    ### If Multiple Files 
+    elif 'info' in torrent_dict and 'files' in torrent_dict['info']:
+        piece_length = torrent_dict['info']['piece length']
+        root_dir = torrent_dict['info']['name']
+        all_pieces = b""
+        
+        for file_info in torrent_dict['info']['files']:
+            full_file_path = os.path.join(root_dir, *file_info['path'])
+            
+            all_pieces += generate_real_pieces(full_file_path, piece_length)
+            
+        torrent_dict['info']['pieces'] = all_pieces
+
+    bencoded_data = bencode.encode(torrent_dict)
+    
+    with open(output_torrent_path, 'wb') as f:
+        f.write(bencoded_data)
+        
+    print(f"[+] Successfully generated: {output_torrent_path}\n")
+
+if __name__ == "__main__":
+    
+    ### Reading the first Torrent
+    json_file_1 = "torrent1.json"
+    output_file_1 = "my_real_torrent_1.txt"
+    
+    ### Creating bencode from simple text
+    if os.path.exists(json_file_1):
+        create_torrent_from_json(json_file_1, output_file_1)
+
+    ### Reading the second Torrent
+    json_file_2 = "torrent2.json"
+    output_file_2 = "my_real_torrent_2.txt"
+
+    ### Creating bencode from simple text
+    if os.path.exists(json_file_2):
+        create_torrent_from_json(json_file_2, output_file_2)
+\end{lstlisting}
+
+\newpage
+\subsection{Tracker Web Service Script}\label{app:tracker_code}
+This section contains the implementation of the multi-threaded HTTP tracker.
+
+\textbf{Code Listing 2: \texttt{tracker.py}}
+\begin{lstlisting}[style=pythonstyle]
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+import urllib.parse
+import bencode 
+from logger import BitTorrentLogger
+
+swarm_db = {}
+tracker_logger = BitTorrentLogger("tracker_log.txt", "Tracker")
+
+class TrackerHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        parsed_url = urllib.parse.urlparse(self.path)
+        params = urllib.parse.parse_qs(parsed_url.query)
+        
+        if parsed_url.path == '/announce':
+            info_hash = params.get('info_hash', [None])[0]
+            peer_id = params.get('peer_id', [None])[0]
+            port = params.get('port', [None])[0]
+
+            event = params.get('event', [None])[0]
+            left = params.get('left', ['-1'])[0]
+
+            try:
+                left = int(left)
+            except ValueError:
+                left = -1
+            
+            if not info_hash or not peer_id or not port:
+                tracker_logger.log_event("ERROR", "Missing required parameters from client")
+                self.send_error_response("Missing required parameters")
+                return
+
+            client_ip = self.client_address[0]
+            tracker_logger.log_event("REQUEST_RECV", f"Received {event or 'regular'} request from {peer_id} at {client_ip}:{port}")
+            
+            if info_hash not in swarm_db:
+                swarm_db[info_hash] = []
+            
+            if event == 'stopped':
+                swarm_db[info_hash] = [p for p in swarm_db[info_hash] if p['peer_id'] != peer_id]
+                
+                print(f"[-] Removed Peer (stopped): {peer_id} from {client_ip}:{port}")
+                tracker_logger.log_event("PEER_REMOVED", f"Peer {peer_id} gracefully stopped and removed")
+                
+                self.send_success_response(info_hash)
+                return
+            
+            elif event == 'completed':
+                print(f"[*] Peer {peer_id} completed the download! Now a Seeder.")
+                tracker_logger.log_event("PEER_COMPLETED", f"Peer {peer_id} at {client_ip}:{port} is now a seeder")
+                left = 0
+
+            elif event == "started":
+                new_peer = {
+                    'peer_id': peer_id,
+                    'ip': client_ip,   
+                    'port': int(port)  
+                }
+                
+                peer_exists = False
+                for p in swarm_db[info_hash]:
+                    if p['peer_id'] == peer_id:
+                        peer_exists = True
+                        p['port'] = int(port) 
+                        break
+                
+                if not peer_exists:
+                    swarm_db[info_hash].append(new_peer)
+
+                print(f"[+] Added/Updated Peer: {peer_id} at {client_ip}:{port}")
+                tracker_logger.log_event("PEER_ADDED", f"Added/Updated Peer: {peer_id} at {client_ip}:{port}")
+
+            self.send_success_response(info_hash, requested_by=peer_id)
+            
+        else:
+            tracker_logger.log_event("WARNING", f"Invalid path requested: {self.path}")
+
+            self.send_response(404)
+            self.end_headers()
+        
+    def send_success_response(self, info_hash, requested_by=None):
+        complete_count = sum(1 for p in swarm_db[info_hash] if p.get('left', -1) == 0)
+        incomplete_count = len(swarm_db[info_hash]) - complete_count
+
+        peers_to_send = [
+            {'peer_id': p['peer_id'], 
+             'ip': p['ip'], 
+             'port': p['port']} 
+            for p in swarm_db[info_hash]
+        ]
+
+        response_dict = {
+            'interval': 30,
+            'complete': complete_count, 
+            'incomplete': incomplete_count,
+            'peers': peers_to_send
+        }
+        
+        bencoded_response = bencode.encode(response_dict)
+        
+        self.send_response(200)
+        self.send_header('Content-type', 'text/plain')
+        self.end_headers()
+        self.wfile.write(bencoded_response)
+
+        if requested_by:
+            tracker_logger.log_event("RESPONSE_SENT", f"Sent peer list ({len(peers_to_send)} peers) to {requested_by}")   
+
+    def send_error_response(self, reason):
+        response = bencode.encode({'failure reason': reason})
+        self.send_response(200) 
+        self.send_header('Content-type', 'text/plain')
+        self.end_headers()
+        self.wfile.write(response)
+
+def start_tracker(port=8000):
+    server_address = ('', port)
+    tracker_server = ThreadingHTTPServer(server_address, TrackerHandler)
+    print(f"[*] Tracker is up and running on port {port}...")
+    tracker_logger.log_event("SERVER_START", f"Tracker started on port {port}")
+
+    try:
+        tracker_server.serve_forever()
+    except KeyboardInterrupt:
+        print("\n[*] Shutting down the tracker.")
+        tracker_logger.log_event("SERVER_STOP", "Tracker shut down by user")
+        tracker_server.server_close()
+
+if __name__ == '__main__':
+    start_tracker()
+\end{lstlisting}
+
+\newpage
+\subsection{Peer Client Script} \label{app:peer_code}
+This section contains the source code for the multi-threaded peer client.
+
+\textbf{Code Listing 3: \texttt{peer.py}}
+\begin{lstlisting}[style=pythonstyle]
+import bencode
+import hashlib
+import urllib.parse
+import urllib.request
+import random
+import string
+import threading
+import time
+import socket 
+from logger import BitTorrentLogger 
+
+def generate_peer_id():
+    prefix = '-AA0001-' 
+    random_chars = ''.join(random.choices(string.ascii_letters + string.digits, k=12))
+    return prefix + random_chars
+
+MY_PEER_ID = generate_peer_id()
+ACTIVE_TORRENTS = []
+
+peer_logger = BitTorrentLogger(f"peer_{MY_PEER_ID}.log", "peers")
+PEER_PORT = 6881 
+
+def start_peer_listener():
+    global PEER_PORT
+
+    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    
+    port = PEER_PORT
+    flag = True
+    while port <= 6889:
+        try:
+            server_socket.bind(('127.0.0.1', port))
+            print(f"[+] Listener successfully started on port {port}")
+            peer_logger.log_event("LISTENER_START", f"Peer listening for direct connections on port {port}")
+            PEER_PORT = port
+            flag = False
+            break
+        except OSError:
+            print(f"[-] Port {port} is busy, trying next...")
+            peer_logger.log_event("PORT_BUSY", f"Port {port} in use. Trying next...")
+            port += 1
+    
+    if (flag):
+        print("[-] All Ports are in use!")
+        peer_logger.log_event("ERROR", "Failed to start listener. All ports in use.")    
+        return
+        
+    server_socket.listen(5)
+
+    while True:
+        try:
+            client_socket, addr = server_socket.accept()
+            data = client_socket.recv(1024).decode('utf-8')
+            
+            if data == "PING":
+                peer_logger.log_event("PING_RECV", f"Received PING from {addr}")
+                client_socket.send("PONG".encode('utf-8'))
+                
+            client_socket.close()
+        except Exception as e:
+            peer_logger.log_event("ERROR", f"Listener error: {e}")
+
+def ping_other_peer(ip, port, torrent_name  ):
+    try:
+        peer_logger.log_event("PING_SEND", f"[{torrent_name}] Attempting to ping peer at {ip}:{port}")        
+
+        server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        server_socket.settimeout(2)
+        server_socket.connect((ip, port))
+        
+        start_time = time.time()
+
+        server_socket.send("PING".encode('utf-8'))
+        
+        response = server_socket.recv(1024).decode('utf-8')
+        if response == "PONG":
+            
+            end_time = time.time()
+            rtt_ms = (end_time - start_time) * 1000
+
+            print(f"      [+] DIRECT CONNECTION SUCCESS: Received PONG from {ip}:{port} with ping {rtt_ms:.2f}")
+            peer_logger.log_event("PING_SUCCESS", f"[{torrent_name}] Received PONG from {ip}:{port} | RTT: {rtt_ms:.2f} ms")
+
+        server_socket.close()
+    except Exception as e:
+        peer_logger.log_event("PING_FAIL", f"[{torrent_name}] Failed to ping {ip}:{port} - {e}")
+
+def process_torrent(torrent_path):
+    peer_id = MY_PEER_ID
+    print(f"\n[*] [Thread {threading.current_thread().name}] Parsing: {torrent_path} with ID {peer_id}")
+    
+    try:
+        with open(torrent_path, 'rb') as f:
+            torrent_data = bencode.decode(f.read())
+        
+        announce_url = torrent_data['announce']
+        info_dict = torrent_data['info']
+        bencoded_info = bencode.encode(info_dict)
+        info_hash = hashlib.sha1(bencoded_info).digest()
+        torrent_name = info_dict['name']
+        
+        total_length = 0
+        if 'files' in info_dict:
+            for f in info_dict['files']:
+                total_length += f['length']
+        else:
+            total_length = info_dict['length']
+
+        global ACTIVE_TORRENTS
+        ACTIVE_TORRENTS.append({
+            'announce_url': announce_url,
+            'info_hash': info_hash,
+            'left': total_length
+        })
+
+        known_peers = set()
+
+        params = {
+            'info_hash': info_hash,
+            'peer_id': peer_id,
+            'port': PEER_PORT, 
+            'uploaded': 0,
+            'downloaded': 0,
+            'left': total_length,
+            'event': 'started' 
+        }
+        
+        url_params = urllib.parse.urlencode(params)
+        request_url = f"{announce_url}?{url_params}"
+        
+        response = urllib.request.urlopen(request_url)
+        tracker_response = bencode.decode(response.read())
+        
+        print(f"\n[+] [Thread {threading.current_thread().name}] Received peers for {info_dict['name']}")
+        peers_list = tracker_response.get('peers', [])
+        
+        if peers_list:
+            for p in peers_list:
+                target_ip = p['ip']
+                target_port = p['port']
+
+                if target_port == PEER_PORT:
+                    continue
+                
+                known_peers.add((target_ip, target_port))
+                ping_other_peer(target_ip, target_port, torrent_name)
+        else:
+            print("      [-] No other peers in the swarm yet.")
+
+        interval = tracker_response.get('interval', 30)
+
+        while True:
+            time.sleep(interval)
+            peer_logger.log_event("ANNOUNCE", f"[{info_dict['name']}] Sending periodic update to tracker...")
+            
+            update_params = {
+                'info_hash': info_hash,
+                'peer_id': peer_id,
+                'port': PEER_PORT, 
+                'uploaded': 0,
+                'downloaded': 0,
+                'left': total_length
+            }
+            
+            update_url = f"{announce_url}?{urllib.parse.urlencode(update_params)}"
+            try:
+                update_response = urllib.request.urlopen(update_url)
+                update_tracker_data = bencode.decode(update_response.read())
+
+                new_peers_list = update_tracker_data.get('peers', [])
+                for p in new_peers_list:
+                    target_ip = p['ip']
+                    target_port = p['port']
+                    
+                    if target_port == PEER_PORT:
+                        continue
+                        
+                    if (target_ip, target_port) not in known_peers:
+                        print(f"      [+] NEW PEER DISCOVERED for {torrent_name}: {target_ip}:{target_port}")
+                        peer_logger.log_event("NEW_PEER", f"[{torrent_name}] Discovered new peer {target_ip}:{target_port} from tracker update")
+                        
+                        known_peers.add((target_ip, target_port))
+                        ping_other_peer(target_ip, target_port, torrent_name)
+
+            except Exception as e:
+                peer_logger.log_event("ERROR", f"[{torrent_name}] Periodic announce failed: {e}")
+            
+    except Exception as e:
+        print(f"[-] [Thread {threading.current_thread().name}] Error: {e}")
+        peer_logger.log_event("ERROR", f"Torrent process error: {e}")
+
+def start_client():
+    listener_thread = threading.Thread(target=start_peer_listener, daemon=True)
+    listener_thread.start()
+    
+    time.sleep(1)
+
+    torrent_files = [
+        r"Torrent_Handler\my_real_torrent_1.txt",
+        r"Torrent_Handler\my_real_torrent_2.txt"
+    ]
+    
+    threads = []
+    
+    for i, file_path in enumerate(torrent_files):
+        t = threading.Thread(target=process_torrent, args=(file_path,), name=f"Torrent-{i+1}", daemon=True)
+        threads.append(t)
+        t.start()
+        time.sleep(1)
+        
+    for t in threads:
+        t.join()
+        
+    print("\n[*] All torrents processed successfully. Keeping listener alive...")
+    
+    try:
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        print("\n[*] Shutting down peer. Notifying tracker...")
+
+        for torrent in ACTIVE_TORRENTS:
+            stop_params = {
+                'info_hash': torrent['info_hash'],
+                'peer_id': MY_PEER_ID,
+                'port': PEER_PORT,
+                'uploaded': 0,
+                'downloaded': 0,
+                'left': torrent['left'],
+                'event': 'stopped'
+            }
+            stop_url = f"{torrent['announce_url']}?{urllib.parse.urlencode(stop_params)}"
+            try:
+                urllib.request.urlopen(stop_url)
+            except Exception as e:
+                pass
+                
+        print("[+] Successfully unregistered from tracker. Goodbye!")
+
+
+if __name__ == '__main__':
+    start_client()
+\end{lstlisting}
+
+
+\newpage
+\subsection{Logging Utility Script} \label{app:logger_code}
+This section contains the implementation of the custom logging module utilized by both the tracker and the peer clients[cite: 9].
+
+\textbf{Code Listing 4: \texttt{logger.py}}
+\begin{lstlisting}[style=pythonstyle]
+import os
+import datetime
+
+class BitTorrentLogger:
+    def __init__(self, log_filename, component_type):
+        self.log_filename = log_filename
+        self.component_type = component_type
+        
+        self.log_dir = os.path.join("logs", self.component_type)
+        
+        os.makedirs(self.log_dir, exist_ok=True)
+        
+        self.full_path = os.path.join(self.log_dir, self.log_filename)
+        
+        self.initialize_log_file()
+
+    def get_current_time(self):
+        return datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    def initialize_log_file(self):
+        if not os.path.exists(self.full_path):
+            creation_time = self.get_current_time()
+            with open(self.full_path, 'w', encoding='utf-8') as f:
+                f.write("="*50 + "\n")
+                f.write("HEADER\n")
+                f.write(f"File name: {self.log_filename}\n")
+                f.write(f"Creation Date/Time: {creation_time}\n")
+                f.write(f"Last Modified Date/Time: {creation_time}\n")
+                f.write("="*50 + "\n")
+                f.write("BODY\n")
+                f.write(f"{'Event Type':<15} | {'Date/Time':<20} | {'Description'}\n")
+                f.write("-" * 50 + "\n")
+
+    def log_event(self, event_type, description):
+        current_time = self.get_current_time()
+        
+        with open(self.full_path, 'a', encoding='utf-8') as f:
+            f.write(f"{event_type:<15} | {current_time:<20} | {description}\n")
+        
+        self._update_last_modified(current_time)
+
+    def _update_last_modified(self, current_time):
+        with open(self.full_path, 'r', encoding='utf-8') as f:
+            lines = f.readlines()
+            
+        with open(self.full_path, 'w', encoding='utf-8') as f:
+            for line in lines:
+                if line.startswith("Last Modified Date/Time:"):
+                    f.write(f"Last Modified Date/Time: {current_time}\n")
+                else:
+                    f.write(line)
+\end{lstlisting}
+
+\end{document}

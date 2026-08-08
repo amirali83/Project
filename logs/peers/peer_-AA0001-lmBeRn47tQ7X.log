@@ -1,0 +1,12 @@
+==================================================
+HEADER
+File name: peer_-AA0001-lmBeRn47tQ7X.log
+Creation Date/Time: 2026-08-08 11:34:17
+Last Modified Date/Time: 2026-08-08 11:34:21
+==================================================
+BODY
+Event Type      | Date/Time            | Description
+--------------------------------------------------
+LISTENER_START  | 2026-08-08 11:34:17  | Peer listening for direct connections on port 6881
+ERROR           | 2026-08-08 11:34:20  | Torrent process error: <urlopen error [WinError 10061] No connection could be made because the target machine actively refused it>
+ERROR           | 2026-08-08 11:34:21  | Torrent process error: <urlopen error [WinError 10061] No connection could be made because the target machine actively refused it>

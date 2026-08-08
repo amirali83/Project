@@ -1,0 +1,24 @@
+==================================================
+HEADER
+File name: peer_-AA0001-nKBzASsNrA5T.log
+Creation Date/Time: 2026-08-08 11:50:16
+Last Modified Date/Time: 2026-08-08 11:51:49
+==================================================
+BODY
+Event Type      | Date/Time            | Description
+--------------------------------------------------
+LISTENER_START  | 2026-08-08 11:50:16  | Peer listening for direct connections on port 6881
+ANNOUNCE        | 2026-08-08 11:50:47  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 11:50:48  | [Transferring_These_Files] Sending periodic update to tracker...
+PING_RECV       | 2026-08-08 11:51:08  | Received PING from ('127.0.0.1', 7543)
+PING_RECV       | 2026-08-08 11:51:09  | Received PING from ('127.0.0.1', 7545)
+ANNOUNCE        | 2026-08-08 11:51:17  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+NEW_PEER        | 2026-08-08 11:51:17  | [Transferring_These_Files/sample3.png] Discovered new peer 127.0.0.1:6882 from tracker update
+PING_SEND       | 2026-08-08 11:51:17  | [Transferring_These_Files/sample3.png] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 11:51:18  | [Transferring_These_Files/sample3.png] Received PONG from 127.0.0.1:6882 | RTT: 12.20 ms
+ANNOUNCE        | 2026-08-08 11:51:18  | [Transferring_These_Files] Sending periodic update to tracker...
+NEW_PEER        | 2026-08-08 11:51:18  | [Transferring_These_Files] Discovered new peer 127.0.0.1:6882 from tracker update
+PING_SEND       | 2026-08-08 11:51:18  | [Transferring_These_Files] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 11:51:19  | [Transferring_These_Files] Received PONG from 127.0.0.1:6882 | RTT: 10.96 ms
+ANNOUNCE        | 2026-08-08 11:51:48  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+ANNOUNCE        | 2026-08-08 11:51:49  | [Transferring_These_Files] Sending periodic update to tracker...

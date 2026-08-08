@@ -1,0 +1,9 @@
+{
+    "announce": "http://127.0.0.1:8000/announce",
+    "info": {
+        "name": "Transferring_These_Files/sample3.png",
+        "length": 1455741,
+        "piece length": 262144,
+        "pieces": ""
+    }
+}

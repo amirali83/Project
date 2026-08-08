@@ -1,0 +1,15 @@
+==================================================
+HEADER
+File name: peer_-AA0001-36XUpsgVNAVS.log
+Creation Date/Time: 2026-08-02 15:05:05
+Last Modified Date/Time: 2026-08-02 15:05:08
+==================================================
+BODY
+Event Type      | Date/Time            | Description
+--------------------------------------------------
+PORT_BUSY       | 2026-08-02 15:05:05  | Port 6881 in use. Trying next...
+LISTENER_START  | 2026-08-02 15:05:05  | Peer listening for direct connections on port 6882
+PING_SEND       | 2026-08-02 15:05:07  | [Transferring_These_Files/sample3.png] Attempting to ping peer at 127.0.0.1:6881
+PING_SUCCESS    | 2026-08-02 15:05:07  | [Transferring_These_Files/sample3.png] Received PONG from 127.0.0.1:6881 | RTT: 11.76 ms
+PING_SEND       | 2026-08-02 15:05:08  | [Transferring_These_Files] Attempting to ping peer at 127.0.0.1:6881
+PING_SUCCESS    | 2026-08-02 15:05:08  | [Transferring_These_Files] Received PONG from 127.0.0.1:6881 | RTT: 13.07 ms
