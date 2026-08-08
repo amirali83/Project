@@ -37,7 +37,12 @@ os.makedirs(WORKSPACE_DIR, exist_ok=True)
 ACTIVE_TORRENTS = []
 GLOBAL_KNOWN_PEERS = set()
 ACTIVE_CONNECTIONS = {}
-ACTIVE_DOWNLOADS = set()
+GLOBAL_FILE_SAVED = set() # برای جلوگیری از بازسازی همزمان یک فایل توسط چند Thread
+
+GLOBAL_PIECE_STATUS = {} # وضعیت قطعات: { info_hash: { index: "MISSING" | "REQUESTED" | "DONE" } }
+GLOBAL_PIECE_BUFFER = {} # نگهداری دیتای خام: { info_hash: { index: b"data..." } }
+SOCKET_LOCKS = {}
+piece_manager_lock = threading.Lock()
 
 peer_logger = BitTorrentLogger(f"peer_{MY_PEER_ID}.log", "peers")
 PEER_PORT = 6881 
@@ -102,6 +107,34 @@ def start_peer_listener():
         except Exception as e:
             peer_logger.log_event("ERROR", f"Listener error: {e}")
 
+def recvall(sock, n):
+    """
+    تضمین می‌کند که دقیقاً n بایت از سوکت خوانده شود.
+    اگر سوکت بسته شود، None برمی‌گرداند.
+    """
+    data = bytearray()
+    while len(data) < n:
+        packet = sock.recv(n - len(data))
+        if not packet:
+            return None
+        data.extend(packet)
+    return bytes(data)
+
+def safe_send(sock, data):
+    """ارسال تضمینی و Thread-Safe داده‌ها روی سوکت"""
+    lock = SOCKET_LOCKS.get(sock)
+    if lock:
+        with lock:
+            try:
+                sock.sendall(data)
+            except:
+                pass
+    else:
+        try:
+            sock.sendall(data)
+        except:
+            pass
+
 def ping_other_peer(ip, port, torrent_name  ):
     try:
         peer_logger.log_event("PING_SEND", f"[{torrent_name}] Attempting to ping peer at {ip}:{port}")        
@@ -134,9 +167,24 @@ def ping_other_peer(ip, port, torrent_name  ):
     except Exception as e:
         peer_logger.log_event("PING_FAIL", f"[{torrent_name}] Failed to ping {ip}:{port} - {e}")
 
+def get_next_missing_piece(info_hash, peer_pieces):
+    """
+    انتخاب هوشمند قطعه بعدی که هنوز درخواست داده نشده و این Peer آن را دارد.
+    """
+    with piece_manager_lock:
+        if info_hash not in GLOBAL_PIECE_STATUS:
+            return None
+            
+        for idx, status in GLOBAL_PIECE_STATUS[info_hash].items():
+            if status == "MISSING" and idx in peer_pieces:
+                GLOBAL_PIECE_STATUS[info_hash][idx] = "REQUESTED"
+                return idx
+    return None
+
 def handle_connection(client_socket, peer_ip, peer_port, torrent_name, info_hash):
     print(f"      [*] Starting connection handler for {peer_ip}:{peer_port}")
     ACTIVE_CONNECTIONS[(peer_ip, peer_port)] = client_socket
+    SOCKET_LOCKS[client_socket] = threading.Lock()
     
     # متغیرهای وضعیت (State Machine)
     am_choking = True
@@ -173,8 +221,8 @@ def handle_connection(client_socket, peer_ip, peer_port, torrent_name, info_hash
     # فرمول محاسبه سقف تقسیم (بدون نیاز به کتابخانه math)
     num_pieces = (total_length + piece_length - 1) // piece_length
     
-    downloaded_buffer = {} # بافر برای نگهداری قطعات دریافت‌شده
-    current_piece_index = 0 # نشانگر قطعه فعلی برای دانلود
+    peer_pieces = set()
+    current_requested_piece = None # نشان می‌دهد این Thread در حال حاضر منتظر چه قطعه‌ای است
 
     # 1. ارسال Bitfield
     bitfield_payload = b'\xff' if is_seeder else b'\x00'
@@ -182,24 +230,24 @@ def handle_connection(client_socket, peer_ip, peer_port, torrent_name, info_hash
     bitfield_msg = struct.pack(f'>IB{len(bitfield_payload)}s', msg_len, 5, bitfield_payload)
     
     try:
-        client_socket.send(bitfield_msg)
+        ##client_socket.send(bitfield_msg)
+        safe_send(client_socket, bitfield_msg)
         print(f"      [>] Sent BITFIELD (Seeder: {is_seeder}) to {peer_ip}:{peer_port}")
         
         # 2. اگر فایل را نداریم (Leecher)، اول چک می‌کنیم که آیا قبلاً درخواست ندادیم؟
+        # 2. اگر فایل را نداریم (Leecher)، به همه کلاینت‌ها پیام INTERESTED می‌فرستیم
         if not is_seeder:
-            if info_hash in ACTIVE_DOWNLOADS:
-                print(f"      [*] Already downloading this torrent. Skipping duplicate request to {peer_ip}:{peer_port}")
-            else:
-                ACTIVE_DOWNLOADS.add(info_hash)
-                interested_msg = struct.pack('>IB', 1, 2)
-                client_socket.send(interested_msg)
-                am_interested = True
-                print(f"      [>] Sent INTERESTED to {peer_ip}:{peer_port}")
-                peer_logger.log_event("STATE_CHANGE", f"Sent INTERESTED to {peer_ip}:{peer_port}")
+            interested_msg = struct.pack('>IB', 1, 2)
+            ##client_socket.send(interested_msg)
+            safe_send(client_socket, interested_msg)
+            am_interested = True
+            print(f"      [>] Sent INTERESTED to {peer_ip}:{peer_port}")
+            peer_logger.log_event("STATE_CHANGE", f"Sent INTERESTED to {peer_ip}:{peer_port}")
 
         # حلقه گوش دادن به پیام‌ها
         while True:
-            length_prefix = client_socket.recv(4)
+            # 1. خواندن دقیق ۴ بایت برای طول پیام
+            length_prefix = recvall(client_socket, 4)
             if not length_prefix or len(length_prefix) < 4:
                 break
                 
@@ -207,53 +255,72 @@ def handle_connection(client_socket, peer_ip, peer_port, torrent_name, info_hash
             if incoming_msg_len == 0:
                 continue # Keep-Alive
                 
-            msg_id_byte = client_socket.recv(1)
+            # 2. خواندن دقیق ۱ بایت برای آیدی پیام
+            msg_id_byte = recvall(client_socket, 1)
+            if not msg_id_byte:
+                break
             incoming_msg_id = struct.unpack('>B', msg_id_byte)[0]
             
+            # 3. خواندن دقیق بقیه بایت‌ها به عنوان Payload (بسیار حیاتی برای PIECE)
             payload_len = incoming_msg_len - 1
-            payload = client_socket.recv(payload_len) if payload_len > 0 else b''
+            payload = recvall(client_socket, payload_len) if payload_len > 0 else b''
+            
+            if payload_len > 0 and not payload:
+                break
             
             # 3. پردازش پیام‌های دریافتی بر اساس ID
             # 3. پردازش پیام‌های دریافتی بر اساس ID
             if incoming_msg_id == 5:
                 print(f"      [<] Received BITFIELD from {peer_ip}:{peer_port}")
+                # پردازش باینری: هر بایت شامل ۸ قطعه است
+                for i, byte in enumerate(payload):
+                    for bit in range(8):
+                        # بررسی روشن بودن بیت (از چپ به راست)
+                        if (byte >> (7 - bit)) & 1:
+                            piece_idx = i * 8 + bit
+                            peer_pieces.add(piece_idx)
+                print(f"      [*] Map updated: Peer {peer_ip}:{peer_port} has {len(peer_pieces)} pieces available.")
                 
             elif incoming_msg_id == 2: # Interested
                 print(f"      [<] Received INTERESTED from {peer_ip}:{peer_port}")
                 if is_seeder:
                     unchoke_msg = struct.pack('>IB', 1, 1)
-                    client_socket.send(unchoke_msg)
+                    ##client_socket.send(unchoke_msg)
+                    safe_send(client_socket, unchoke_msg)
                     print(f"      [>] Sent UNCHOKE to {peer_ip}:{peer_port}")
                     
-            elif incoming_msg_id == 1: # Unchoke (آماده دانلود)
-                print(f"      [<] Received UNCHOKE from {peer_ip}:{peer_port}. Requesting data...")
+            elif incoming_msg_id == 1: # Unchoke
+                print(f"      [<] Received UNCHOKE from {peer_ip}:{peer_port}.")
+                # استفاده از هوش انتخاب قطعه به جای درخواست ترتیبی
+                next_piece = get_next_missing_piece(info_hash, peer_pieces)
                 
-                # پیدا کردن سایز فایل برای درخواست
-                file_size = 0
-                for t in ACTIVE_TORRENTS:
-                    if t['info_hash'] == info_hash:
-                        file_size = int(t['left'])
-                        break
-                
-                # برای سادگی شبیه‌سازی، کل فایل را در یک قطعه درخواست می‌کنیم
-                # طول پیام: 13 بایت | آیدی: 6 | ایندکس: 0 | شروع: 0 | طول داده: file_size
-                req_len = piece_length if (0 < num_pieces - 1) else (total_length - (0 * piece_length))
+                if next_piece is not None:
+                    current_requested_piece = next_piece
+                    req_len = piece_length if (next_piece < num_pieces - 1) else (total_length - (next_piece * piece_length))
+                    
+                    req_msg = struct.pack('>IBIII', 13, 6, next_piece, 0, req_len)
+                    ##client_socket.send(req_msg)
+                    safe_send(client_socket, req_msg)
+                    print(f"      [>] Sent REQUEST for piece {next_piece} to {peer_ip}:{peer_port}")
+                else:
+                    print(f"      [*] No pieces needed from {peer_ip}:{peer_port} right now.")
 
-                req_msg = struct.pack('>IBIII', 13, 6, 0, 0, req_len)
-                client_socket.send(req_msg)
-                print(f"      [>] Sent REQUEST for piece 0 (size: {req_len} bytes)")
-                try:
-                    # گزارش ارسال ریکوئست زرد رنگ
-                    urllib.request.urlopen(f"http://127.0.0.1:8000/log_traffic?from_peer=127.0.0.1:{PEER_PORT}&to_peer={peer_ip}:{peer_port}&type=REQ")
-                except:
-                    pass
-
-            elif incoming_msg_id == 4: # HAVE (یک کلاینت دیگر قطعه جدیدی دریافت کرده است)
+            elif incoming_msg_id == 4: # HAVE
                 if payload_len == 4:
                     received_piece_idx = struct.unpack('>I', payload)[0]
                     print(f"      [<] Received HAVE from {peer_ip}:{peer_port} for piece {received_piece_idx}")
-                    # در یک کلاینت واقعی، اینجا آرایه Bitfield مربوط به این Peer در رم آپدیت می‌شود
-                    # تا در آینده بدانیم می‌توانیم این قطعه را هم از او درخواست کنیم.
+                    # آپدیت کردن نقشه قطعاتِ این کلاینت
+                    peer_pieces.add(received_piece_idx)
+                    
+                    # اگر بیکار هستیم و این قطعه رو نیاز داریم، می‌تونیم اینجا ریکوئست بدیم
+                    if current_requested_piece is None and not peer_choking:
+                        next_piece = get_next_missing_piece(info_hash, peer_pieces)
+                        if next_piece is not None:
+                            current_requested_piece = next_piece
+                            req_len = piece_length if (next_piece < num_pieces - 1) else (total_length - (next_piece * piece_length))
+                            req_msg = struct.pack('>IBIII', 13, 6, next_piece, 0, req_len)
+                            #client_socket.send(req_msg)
+                            safe_send(client_socket, req_msg)
                 
             elif incoming_msg_id == 6: # Request (سیدر این را دریافت می‌کند)
                 if payload_len == 12:
@@ -263,15 +330,23 @@ def handle_connection(client_socket, peer_ip, peer_port, torrent_name, info_hash
                     file_data = b""
                     try:
                         if 'files' in info_dict:
-                            # خواندن تمام فایل‌ها و چسباندن بایت‌های آن‌ها به یکدیگر
+                            # خواندن تمام فایل‌ها با رعایت دقیقِ سایز استاندارد
                             for f in info_dict['files']:
                                 f_path = os.path.join(WORKSPACE_DIR, real_torrent_name, *f['path'])
                                 with open(f_path, 'rb') as file_obj:
-                                    file_data += file_obj.read()
+                                    data = file_obj.read()
+                                    # استخراج دقیق بایت‌ها: جلوگیری از شیفت شدن استریم
+                                    file_data += data[:f['length']]
+                                    if len(data) < f['length']:
+                                        file_data += b'\x00' * (f['length'] - len(data))
                         else:
                             file_path = os.path.join(WORKSPACE_DIR, real_torrent_name)
                             with open(file_path, 'rb') as file_obj:
-                                file_data = file_obj.read()
+                                data = file_obj.read()
+                                expected_len = info_dict['length']
+                                file_data += data[:expected_len]
+                                if len(data) < expected_len:
+                                    file_data += b'\x00' * (expected_len - len(data))
                             
                         # --- جداسازی دقیق قطعه درخواستی ---
                         absolute_offset = (piece_index * piece_length) + begin_offset
@@ -280,12 +355,8 @@ def handle_connection(client_socket, peer_ip, peer_port, torrent_name, info_hash
                         piece_msg_len = 9 + len(piece_data)
                         piece_header = struct.pack('>IBII', piece_msg_len, 7, piece_index, begin_offset)
                         
-                        client_socket.send(piece_header + piece_data)
+                        safe_send(client_socket, piece_header + piece_data)
                         print(f"      [>] Sent PIECE {piece_index} to {peer_ip}:{peer_port} ({len(piece_data)} bytes)")
-                        try:
-                            urllib.request.urlopen(f"http://127.0.0.1:8000/log_traffic?from_peer=127.0.0.1:{PEER_PORT}&to_peer={peer_ip}:{peer_port}&type=PIECE")
-                        except:
-                            pass
                     except Exception as e:
                         print(f"      [-] File read error: {e}")
                         
@@ -293,54 +364,52 @@ def handle_connection(client_socket, peer_ip, peer_port, torrent_name, info_hash
                 piece_index, begin_offset = struct.unpack('>II', payload[:8])
                 raw_piece_data = payload[8:]
                 
-                print(f"      [<] Received PIECE {piece_index} from {peer_ip}:{peer_port} ({len(raw_piece_data)} bytes)")
+                print(f"      [<] Received PIECE {piece_index} from {peer_ip}:{peer_port}")
                 
-                # ---> 1. استخراج هش اصلی این قطعه از فایل تورنت (هر قطعه 20 بایت است) <---
                 expected_hash = info_dict['pieces'][piece_index * 20 : (piece_index + 1) * 20]
-                
-                # ---> 2. محاسبه هش SHA-1 برای دیتای دریافت شده <---
-                import hashlib
                 actual_hash = hashlib.sha1(raw_piece_data).digest()
                 
-                # ---> 3. مقایسه هش‌ها <---
                 if expected_hash != actual_hash:
-                    print(f"      [-] HASH FAILED for piece {piece_index}! Data is corrupted. Dropping piece.")
-                    # اگر کلاینت واقعی بودیم، دوباره Request می‌فرستادیم. اما اینجا فعلاً قطعه را دور می‌اندازیم.
-                    continue
+                    print(f"      [-] HASH FAILED for piece {piece_index}! Reverting status.")
+                    # اگر هش خراب بود، وضعیت قطعه را برمی‌گردانیم
+                    with piece_manager_lock:
+                        GLOBAL_PIECE_STATUS[info_hash][piece_index] = "MISSING"
+                    current_requested_piece = None
+                    
+                    # به جای قطع ارتباط (break)، فوراً قطعه‌ی دیگری را درخواست می‌کنیم تا دانلود گیر نکند
+                    next_piece = get_next_missing_piece(info_hash, peer_pieces)
+                    if next_piece is not None:
+                        current_requested_piece = next_piece
+                        req_len = piece_length if (next_piece < num_pieces - 1) else (total_length - (next_piece * piece_length))
+                        req_msg = struct.pack('>IBIII', 13, 6, next_piece, 0, req_len)
+                        safe_send(client_socket, req_msg)
                 else:
                     print(f"      [+] HASH VERIFIED for piece {piece_index}.")
+                    with piece_manager_lock:
+                        GLOBAL_PIECE_BUFFER[info_hash][piece_index] = raw_piece_data
+                        GLOBAL_PIECE_STATUS[info_hash][piece_index] = "DONE"
+                    current_requested_piece = None
                     
-                    # 4. ذخیره در صورت صحت کامل دیتای باینری
-                    downloaded_buffer[piece_index] = raw_piece_data
-                    current_piece_index += 1
-                    
-                    # ---> اضافه کردن بخش ارسال پیام HAVE <---
-                    # طول پیام 5 بایت (1 بایت آیدی + 4 بایت ایندکس قطعه)
+                    # اطلاع‌رسانی به بقیه (HAVE)
                     have_msg = struct.pack('>IBI', 5, 4, piece_index)
-                    
-                    # ما باید این پیام رو به همه کسانی که بهشون وصل هستیم بفرستیم
-                    # (در اینجا برای شبیه‌سازی، روی سوکت‌های فعال ارسال می‌کنیم)
                     for (p_ip, p_port), sock in list(ACTIVE_CONNECTIONS.items()):
-                        try:
-                            sock.send(have_msg)
-                            print(f"      [>] Broadcasted HAVE (Piece {piece_index}) to {p_ip}:{p_port}")
-                        except:
-                            pass
-
-                    # بررسی ادامه دانلود یا اتمام کار
-                    if current_piece_index < num_pieces:
-                        req_len = piece_length if (current_piece_index < num_pieces - 1) else (total_length - (current_piece_index * piece_length))
-                        req_msg = struct.pack('>IBIII', 13, 6, current_piece_index, 0, req_len)
-                        client_socket.send(req_msg)
-                        print(f"      [>] Sent REQUEST for piece {current_piece_index} (size: {req_len} bytes)")
-                        try:
-                            urllib.request.urlopen(f"http://127.0.0.1:8000/log_traffic?from_peer=127.0.0.1:{PEER_PORT}&to_peer={peer_ip}:{peer_port}&type=REQ")
-                        except:
-                            pass
-                    else:
+                        try: safe_send(sock, have_msg)
+                        except: pass
+                
+                # بررسی وضعیت کلی دانلود
+                with piece_manager_lock:
+                    all_done = all(status == "DONE" for status in GLOBAL_PIECE_STATUS[info_hash].values())
+                
+                if all_done:
+                    should_reconstruct = False
+                    with piece_manager_lock:
+                        if info_hash not in GLOBAL_FILE_SAVED:
+                            GLOBAL_FILE_SAVED.add(info_hash)
+                            should_reconstruct = True
+                            
+                    if should_reconstruct:
                         print("      [*] All pieces received! Reconstructing file(s)...")
-                        
-                        full_data = b"".join(downloaded_buffer[i] for i in range(num_pieces))
+                        full_data = b"".join(GLOBAL_PIECE_BUFFER[info_hash][i] for i in range(num_pieces))
                         try:
                             if 'files' in info_dict:
                                 current_offset = 0
@@ -348,7 +417,6 @@ def handle_connection(client_socket, peer_ip, peer_port, torrent_name, info_hash
                                     f_len = f['length']
                                     f_data = full_data[current_offset : current_offset + f_len]
                                     current_offset += f_len
-                                    
                                     f_path = os.path.join(WORKSPACE_DIR, real_torrent_name, *f['path'])
                                     os.makedirs(os.path.dirname(f_path), exist_ok=True)
                                     with open(f_path, 'wb') as file_obj:
@@ -366,10 +434,18 @@ def handle_connection(client_socket, peer_ip, peer_port, torrent_name, info_hash
                                 if t['info_hash'] == info_hash:
                                     t['left'] = 0
                                     break
-                            if info_hash in ACTIVE_DOWNLOADS:
-                                ACTIVE_DOWNLOADS.remove(info_hash)
                         except Exception as e:
                             print(f"      [-] File write error: {e}")
+                else:
+                    # اگر هنوز قطعاتی باقی مانده است
+                    if current_requested_piece is None:
+                        next_piece = get_next_missing_piece(info_hash, peer_pieces)
+                        if next_piece is not None:
+                            current_requested_piece = next_piece
+                            req_len = piece_length if (next_piece < num_pieces - 1) else (total_length - (next_piece * piece_length))
+                            req_msg = struct.pack('>IBIII', 13, 6, next_piece, 0, req_len)
+                            safe_send(client_socket, req_msg)
+                            print(f"      [>] Sent REQUEST for piece {next_piece} to {peer_ip}:{peer_port}")
                 
             else:
                 print(f"      [<] Received unknown MSG ID: {incoming_msg_id}")
@@ -377,6 +453,13 @@ def handle_connection(client_socket, peer_ip, peer_port, torrent_name, info_hash
     except Exception as e:
         print(f"      [-] Connection dropped with {peer_ip}:{peer_port}: {e}")
     finally:
+        # اگر اتصال قطع شد و این Thread در حال دانلود قطعه‌ای بود، آن را آزاد کن
+        if current_requested_piece is not None:
+            with piece_manager_lock:
+                if GLOBAL_PIECE_STATUS.get(info_hash, {}).get(current_requested_piece) == "REQUESTED":
+                    GLOBAL_PIECE_STATUS[info_hash][current_requested_piece] = "MISSING"
+                    print(f"      [-] Released piece {current_requested_piece} back to pool.")
+                    
         client_socket.close()
         if (peer_ip, peer_port) in ACTIVE_CONNECTIONS:
             del ACTIVE_CONNECTIONS[(peer_ip, peer_port)]
@@ -471,6 +554,20 @@ def process_torrent(torrent_path):
         print(f"      [*] Status for '{torrent_name}': {status_text} (Left: {left_bytes} bytes)")
         peer_logger.log_event("FILE_CHECK", f"Determined status as {status_text} for {torrent_name}")
         # ------------------------------------
+
+        # --- مقداردهی مدیر سراسری قطعات ---
+        piece_length = info_dict.get('piece length', 262144)
+        num_pieces = (total_length + piece_length - 1) // piece_length
+        
+        with piece_manager_lock:
+            if info_hash not in GLOBAL_PIECE_STATUS:
+                GLOBAL_PIECE_STATUS[info_hash] = {}
+                GLOBAL_PIECE_BUFFER[info_hash] = {}
+                for i in range(num_pieces):
+                    # اگر سیدر هستیم یعنی همه رو داریم، در غیر این صورت نداریم
+                    GLOBAL_PIECE_STATUS[info_hash][i] = "DONE" if is_seeder else "MISSING"
+        # -----------------------------------
+
 
         global ACTIVE_TORRENTS
         ACTIVE_TORRENTS.append({

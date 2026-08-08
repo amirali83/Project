@@ -2,7 +2,7 @@
 HEADER
 File name: peer_-AA0001-000000000003.log
 Creation Date/Time: 2026-08-08 18:03:13
-Last Modified Date/Time: 2026-08-08 18:37:15
+Last Modified Date/Time: 2026-08-08 19:45:04
 ==================================================
 BODY
 Event Type      | Date/Time            | Description
@@ -268,345 +268,222 @@ ANNOUNCE        | 2026-08-08 18:17:32  | [Transferring_These_Files] Sending peri
 PING_RECV       | 2026-08-08 18:17:49  | Received PING from ('127.0.0.1', 8546)
 HEARTBEAT_SYNC  | 2026-08-08 18:17:54  | Periodic ping
 PING_SEND       | 2026-08-08 18:17:54  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
-PING_SUCCESS    | 2026-08-08 18:17:54  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 17.00 ms
-PING_SEND       | 2026-08-08 18:17:54  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
-PING_SUCCESS    | 2026-08-08 18:17:54  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 14.89 ms
-PING_RECV       | 2026-08-08 18:18:00  | Received PING from ('127.0.0.1', 8559)
-ANNOUNCE        | 2026-08-08 18:18:02  | [Transferring_These_Files] Sending periodic update to tracker...
-PING_RECV       | 2026-08-08 18:18:19  | Received PING from ('127.0.0.1', 8581)
-SHUTDOWN_INIT   | 2026-08-08 18:18:24  | Keyboard interrupt received. Deregistering from tracker.
-PORT_BUSY       | 2026-08-08 18:19:14  | Port 6881 in use. Trying next...
-PORT_BUSY       | 2026-08-08 18:19:14  | Port 6882 in use. Trying next...
-LISTENER_START  | 2026-08-08 18:19:14  | Peer listening for direct connections on port 6883
-FILE_CHECK      | 2026-08-08 18:19:21  | Determined status as LEECHER for Transferring_These_Files
-HANDSHAKE_SEND  | 2026-08-08 18:19:21  | [Transferring_These_Files] Initiating handshake with 127.0.0.1:6881
-HANDSHAKE_SUCCESS | 2026-08-08 18:19:21  | [Transferring_These_Files] Handshake successful with -AA0001-000000000001
-HANDSHAKE_SEND  | 2026-08-08 18:19:21  | [Transferring_These_Files] Initiating handshake with 127.0.0.1:6882
-STATE_CHANGE    | 2026-08-08 18:19:21  | Sent INTERESTED to 127.0.0.1:6881
-HANDSHAKE_SUCCESS | 2026-08-08 18:19:21  | [Transferring_These_Files] Handshake successful with -AA0001-000000000002
-HANDSHAKE_RECV  | 2026-08-08 18:19:27  | Handshake verified from -AA0001-000000000001
-PING_RECV       | 2026-08-08 18:19:28  | Received PING from ('127.0.0.1', 8732)
-HANDSHAKE_RECV  | 2026-08-08 18:19:39  | Handshake verified from -AA0001-000000000002
-PING_RECV       | 2026-08-08 18:19:40  | Received PING from ('127.0.0.1', 8800)
-HEARTBEAT_SYNC  | 2026-08-08 18:19:45  | Periodic ping
-PING_SEND       | 2026-08-08 18:19:45  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
-PING_SUCCESS    | 2026-08-08 18:19:45  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 16.03 ms
-PING_SEND       | 2026-08-08 18:19:45  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
-PING_SUCCESS    | 2026-08-08 18:19:45  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 13.58 ms
-ANNOUNCE        | 2026-08-08 18:19:51  | [Transferring_These_Files] Sending periodic update to tracker...
-PING_RECV       | 2026-08-08 18:19:58  | Received PING from ('127.0.0.1', 8841)
-PING_RECV       | 2026-08-08 18:20:10  | Received PING from ('127.0.0.1', 8860)
-HEARTBEAT_SYNC  | 2026-08-08 18:20:15  | Periodic ping
-PING_SEND       | 2026-08-08 18:20:15  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
-PING_SUCCESS    | 2026-08-08 18:20:16  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 16.14 ms
-PING_SEND       | 2026-08-08 18:20:16  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
-PING_SUCCESS    | 2026-08-08 18:20:16  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 16.26 ms
-ANNOUNCE        | 2026-08-08 18:20:21  | [Transferring_These_Files] Sending periodic update to tracker...
-PING_RECV       | 2026-08-08 18:20:28  | Received PING from ('127.0.0.1', 8898)
-PING_RECV       | 2026-08-08 18:20:40  | Received PING from ('127.0.0.1', 8917)
-HEARTBEAT_SYNC  | 2026-08-08 18:20:46  | Periodic ping
-PING_SEND       | 2026-08-08 18:20:46  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
-PING_SUCCESS    | 2026-08-08 18:20:46  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 23.91 ms
-PING_SEND       | 2026-08-08 18:20:46  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
-PING_SUCCESS    | 2026-08-08 18:20:46  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 15.93 ms
-ANNOUNCE        | 2026-08-08 18:20:51  | [Transferring_These_Files] Sending periodic update to tracker...
-PING_RECV       | 2026-08-08 18:20:58  | Received PING from ('127.0.0.1', 8966)
-PING_RECV       | 2026-08-08 18:21:10  | Received PING from ('127.0.0.1', 8994)
-HEARTBEAT_SYNC  | 2026-08-08 18:21:16  | Periodic ping
-PING_SEND       | 2026-08-08 18:21:16  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
-PING_SUCCESS    | 2026-08-08 18:21:16  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 16.08 ms
-PING_SEND       | 2026-08-08 18:21:16  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
-PING_SUCCESS    | 2026-08-08 18:21:16  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 13.99 ms
-ANNOUNCE        | 2026-08-08 18:21:21  | [Transferring_These_Files] Sending periodic update to tracker...
-PING_RECV       | 2026-08-08 18:21:28  | Received PING from ('127.0.0.1', 9022)
-PING_RECV       | 2026-08-08 18:21:40  | Received PING from ('127.0.0.1', 9070)
-HEARTBEAT_SYNC  | 2026-08-08 18:21:46  | Periodic ping
-PING_SEND       | 2026-08-08 18:21:46  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
-PING_SUCCESS    | 2026-08-08 18:21:46  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 17.28 ms
-PING_SEND       | 2026-08-08 18:21:46  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
-PING_SUCCESS    | 2026-08-08 18:21:46  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 16.54 ms
-ANNOUNCE        | 2026-08-08 18:21:51  | [Transferring_These_Files] Sending periodic update to tracker...
-PING_RECV       | 2026-08-08 18:21:58  | Received PING from ('127.0.0.1', 9091)
-PING_RECV       | 2026-08-08 18:22:10  | Received PING from ('127.0.0.1', 9096)
-HEARTBEAT_SYNC  | 2026-08-08 18:22:16  | Periodic ping
-PING_SEND       | 2026-08-08 18:22:16  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
-PING_SUCCESS    | 2026-08-08 18:22:16  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 15.00 ms
-PING_SEND       | 2026-08-08 18:22:16  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
-PING_SUCCESS    | 2026-08-08 18:22:16  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 14.36 ms
-ANNOUNCE        | 2026-08-08 18:22:21  | [Transferring_These_Files] Sending periodic update to tracker...
-PING_RECV       | 2026-08-08 18:22:29  | Received PING from ('127.0.0.1', 9125)
-PING_RECV       | 2026-08-08 18:22:41  | Received PING from ('127.0.0.1', 9139)
-HEARTBEAT_SYNC  | 2026-08-08 18:22:46  | Periodic ping
-PING_SEND       | 2026-08-08 18:22:46  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
-PING_SUCCESS    | 2026-08-08 18:22:46  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 15.53 ms
-PING_SEND       | 2026-08-08 18:22:46  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
-PING_SUCCESS    | 2026-08-08 18:22:46  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 13.59 ms
-ANNOUNCE        | 2026-08-08 18:22:51  | [Transferring_These_Files] Sending periodic update to tracker...
-PING_RECV       | 2026-08-08 18:22:59  | Received PING from ('127.0.0.1', 9156)
-PING_RECV       | 2026-08-08 18:23:11  | Received PING from ('127.0.0.1', 9166)
-HEARTBEAT_SYNC  | 2026-08-08 18:23:16  | Periodic ping
-PING_SEND       | 2026-08-08 18:23:16  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
-PING_SUCCESS    | 2026-08-08 18:23:16  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 22.00 ms
-PING_SEND       | 2026-08-08 18:23:16  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
-PING_SUCCESS    | 2026-08-08 18:23:16  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 16.00 ms
-ANNOUNCE        | 2026-08-08 18:23:21  | [Transferring_These_Files] Sending periodic update to tracker...
-PING_RECV       | 2026-08-08 18:23:29  | Received PING from ('127.0.0.1', 9211)
-PING_RECV       | 2026-08-08 18:23:41  | Received PING from ('127.0.0.1', 9226)
-HEARTBEAT_SYNC  | 2026-08-08 18:23:46  | Periodic ping
-PING_SEND       | 2026-08-08 18:23:47  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
-PING_SUCCESS    | 2026-08-08 18:23:47  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 18.93 ms
-PING_SEND       | 2026-08-08 18:23:47  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
-PING_SUCCESS    | 2026-08-08 18:23:47  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 16.50 ms
-ANNOUNCE        | 2026-08-08 18:23:51  | [Transferring_These_Files] Sending periodic update to tracker...
-PING_RECV       | 2026-08-08 18:23:59  | Received PING from ('127.0.0.1', 9279)
-PING_RECV       | 2026-08-08 18:24:11  | Received PING from ('127.0.0.1', 9291)
-HEARTBEAT_SYNC  | 2026-08-08 18:24:17  | Periodic ping
-PING_SEND       | 2026-08-08 18:24:17  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
-PING_SUCCESS    | 2026-08-08 18:24:17  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 26.15 ms
-PING_SEND       | 2026-08-08 18:24:17  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
-PING_SUCCESS    | 2026-08-08 18:24:17  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 14.06 ms
-ANNOUNCE        | 2026-08-08 18:24:22  | [Transferring_These_Files] Sending periodic update to tracker...
-SHUTDOWN_INIT   | 2026-08-08 18:24:22  | Keyboard interrupt received. Deregistering from tracker.
-PORT_BUSY       | 2026-08-08 18:24:36  | Port 6881 in use. Trying next...
-PORT_BUSY       | 2026-08-08 18:24:36  | Port 6882 in use. Trying next...
-LISTENER_START  | 2026-08-08 18:24:36  | Peer listening for direct connections on port 6883
-FILE_CHECK      | 2026-08-08 18:24:37  | Determined status as SEEDER for Transferring_These_Files
-HANDSHAKE_SEND  | 2026-08-08 18:24:37  | [Transferring_These_Files] Initiating handshake with 127.0.0.1:6881
-HANDSHAKE_SUCCESS | 2026-08-08 18:24:37  | [Transferring_These_Files] Handshake successful with -AA0001-000000000001
-HANDSHAKE_SEND  | 2026-08-08 18:24:37  | [Transferring_These_Files] Initiating handshake with 127.0.0.1:6882
-HANDSHAKE_SUCCESS | 2026-08-08 18:24:37  | [Transferring_These_Files] Handshake successful with -AA0001-000000000002
-FILE_CHECK      | 2026-08-08 18:24:43  | Determined status as LEECHER for Transferring_These_Files/sample3.png
-HANDSHAKE_SEND  | 2026-08-08 18:24:43  | [Transferring_These_Files/sample3.png] Initiating handshake with 127.0.0.1:6881
-HANDSHAKE_SUCCESS | 2026-08-08 18:24:43  | [Transferring_These_Files/sample3.png] Handshake successful with -AA0001-000000000001
-HANDSHAKE_SEND  | 2026-08-08 18:24:43  | [Transferring_These_Files/sample3.png] Initiating handshake with 127.0.0.1:6882
-STATE_CHANGE    | 2026-08-08 18:24:43  | Sent INTERESTED to 127.0.0.1:6881
-HANDSHAKE_SUCCESS | 2026-08-08 18:24:43  | [Transferring_These_Files/sample3.png] Handshake successful with -AA0001-000000000002
-HANDSHAKE_RECV  | 2026-08-08 18:25:00  | Handshake verified from -AA0001-000000000001
-HANDSHAKE_RECV  | 2026-08-08 18:25:01  | Handshake verified from -AA0001-000000000001
-PING_RECV       | 2026-08-08 18:25:02  | Received PING from ('127.0.0.1', 9364)
-HANDSHAKE_RECV  | 2026-08-08 18:25:04  | Handshake verified from -AA0001-000000000002
-HANDSHAKE_RECV  | 2026-08-08 18:25:06  | Handshake verified from -AA0001-000000000002
-PING_RECV       | 2026-08-08 18:25:06  | Received PING from ('127.0.0.1', 9372)
-ANNOUNCE        | 2026-08-08 18:25:07  | [Transferring_These_Files] Sending periodic update to tracker...
-HEARTBEAT_SYNC  | 2026-08-08 18:25:08  | Periodic ping
-PING_SEND       | 2026-08-08 18:25:08  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
-PING_SUCCESS    | 2026-08-08 18:25:08  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 16.39 ms
-PING_SEND       | 2026-08-08 18:25:08  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
-PING_SUCCESS    | 2026-08-08 18:25:08  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 21.96 ms
-ANNOUNCE        | 2026-08-08 18:25:13  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
-PING_RECV       | 2026-08-08 18:25:32  | Received PING from ('127.0.0.1', 9399)
-PING_RECV       | 2026-08-08 18:25:36  | Received PING from ('127.0.0.1', 9405)
-ANNOUNCE        | 2026-08-08 18:25:38  | [Transferring_These_Files] Sending periodic update to tracker...
-HEARTBEAT_SYNC  | 2026-08-08 18:25:38  | Periodic ping
-PING_SEND       | 2026-08-08 18:25:38  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
-PING_SUCCESS    | 2026-08-08 18:25:38  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 15.44 ms
-PING_SEND       | 2026-08-08 18:25:38  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
-PING_SUCCESS    | 2026-08-08 18:25:39  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 17.97 ms
-ANNOUNCE        | 2026-08-08 18:25:43  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
-PING_RECV       | 2026-08-08 18:26:03  | Received PING from ('127.0.0.1', 9459)
-PING_RECV       | 2026-08-08 18:26:07  | Received PING from ('127.0.0.1', 9467)
-ANNOUNCE        | 2026-08-08 18:26:08  | [Transferring_These_Files] Sending periodic update to tracker...
-HEARTBEAT_SYNC  | 2026-08-08 18:26:09  | Periodic ping
-PING_SEND       | 2026-08-08 18:26:09  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
-PING_SUCCESS    | 2026-08-08 18:26:09  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 16.00 ms
-PING_SEND       | 2026-08-08 18:26:09  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
-PING_SUCCESS    | 2026-08-08 18:26:09  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 23.73 ms
-ANNOUNCE        | 2026-08-08 18:26:13  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
-PING_RECV       | 2026-08-08 18:26:33  | Received PING from ('127.0.0.1', 9504)
-PING_RECV       | 2026-08-08 18:26:37  | Received PING from ('127.0.0.1', 9518)
-ANNOUNCE        | 2026-08-08 18:26:38  | [Transferring_These_Files] Sending periodic update to tracker...
-HEARTBEAT_SYNC  | 2026-08-08 18:26:39  | Periodic ping
-PING_SEND       | 2026-08-08 18:26:39  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
-PING_SUCCESS    | 2026-08-08 18:26:39  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 17.56 ms
-PING_SEND       | 2026-08-08 18:26:39  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
-PING_SUCCESS    | 2026-08-08 18:26:39  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 15.68 ms
-ANNOUNCE        | 2026-08-08 18:26:43  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
-PING_RECV       | 2026-08-08 18:27:03  | Received PING from ('127.0.0.1', 9539)
-PING_RECV       | 2026-08-08 18:27:07  | Received PING from ('127.0.0.1', 9545)
-ANNOUNCE        | 2026-08-08 18:27:08  | [Transferring_These_Files] Sending periodic update to tracker...
-HEARTBEAT_SYNC  | 2026-08-08 18:27:09  | Periodic ping
-PING_SEND       | 2026-08-08 18:27:09  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
-PING_SUCCESS    | 2026-08-08 18:27:09  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 19.60 ms
-PING_SEND       | 2026-08-08 18:27:09  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
-PING_SUCCESS    | 2026-08-08 18:27:09  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 20.28 ms
-ANNOUNCE        | 2026-08-08 18:27:13  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
-PING_RECV       | 2026-08-08 18:27:33  | Received PING from ('127.0.0.1', 9580)
-PING_RECV       | 2026-08-08 18:27:37  | Received PING from ('127.0.0.1', 9590)
-ANNOUNCE        | 2026-08-08 18:27:38  | [Transferring_These_Files] Sending periodic update to tracker...
-HEARTBEAT_SYNC  | 2026-08-08 18:27:39  | Periodic ping
-PING_SEND       | 2026-08-08 18:27:39  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
-PING_SUCCESS    | 2026-08-08 18:27:39  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 15.00 ms
-PING_SEND       | 2026-08-08 18:27:39  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
-PING_SUCCESS    | 2026-08-08 18:27:39  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 16.63 ms
-ANNOUNCE        | 2026-08-08 18:27:43  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
-PING_RECV       | 2026-08-08 18:28:03  | Received PING from ('127.0.0.1', 9631)
-PING_RECV       | 2026-08-08 18:28:07  | Received PING from ('127.0.0.1', 9663)
-ANNOUNCE        | 2026-08-08 18:28:08  | [Transferring_These_Files] Sending periodic update to tracker...
-HEARTBEAT_SYNC  | 2026-08-08 18:28:09  | Periodic ping
-PING_SEND       | 2026-08-08 18:28:09  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
-PING_SUCCESS    | 2026-08-08 18:28:09  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 20.71 ms
-PING_SEND       | 2026-08-08 18:28:09  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
-PING_SUCCESS    | 2026-08-08 18:28:09  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 17.22 ms
-ANNOUNCE        | 2026-08-08 18:28:13  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
-PING_RECV       | 2026-08-08 18:28:33  | Received PING from ('127.0.0.1', 9692)
-PING_RECV       | 2026-08-08 18:28:37  | Received PING from ('127.0.0.1', 9704)
-ANNOUNCE        | 2026-08-08 18:28:38  | [Transferring_These_Files] Sending periodic update to tracker...
-HEARTBEAT_SYNC  | 2026-08-08 18:28:39  | Periodic ping
-PING_SEND       | 2026-08-08 18:28:39  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
-PING_SUCCESS    | 2026-08-08 18:28:39  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 14.78 ms
-PING_SEND       | 2026-08-08 18:28:39  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
-PING_SUCCESS    | 2026-08-08 18:28:39  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 19.41 ms
-ANNOUNCE        | 2026-08-08 18:28:43  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
-PING_RECV       | 2026-08-08 18:29:04  | Received PING from ('127.0.0.1', 9731)
-PING_RECV       | 2026-08-08 18:29:07  | Received PING from ('127.0.0.1', 9743)
-ANNOUNCE        | 2026-08-08 18:29:08  | [Transferring_These_Files] Sending periodic update to tracker...
-HEARTBEAT_SYNC  | 2026-08-08 18:29:09  | Periodic ping
-PING_SEND       | 2026-08-08 18:29:10  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
-PING_SUCCESS    | 2026-08-08 18:29:10  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 20.00 ms
-PING_SEND       | 2026-08-08 18:29:10  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
-PING_SUCCESS    | 2026-08-08 18:29:10  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 18.00 ms
-ANNOUNCE        | 2026-08-08 18:29:14  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
-PING_RECV       | 2026-08-08 18:29:34  | Received PING from ('127.0.0.1', 9762)
-PING_RECV       | 2026-08-08 18:29:38  | Received PING from ('127.0.0.1', 9768)
-ANNOUNCE        | 2026-08-08 18:29:38  | [Transferring_These_Files] Sending periodic update to tracker...
-HEARTBEAT_SYNC  | 2026-08-08 18:29:40  | Periodic ping
-PING_SEND       | 2026-08-08 18:29:40  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
-PING_SUCCESS    | 2026-08-08 18:29:40  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 18.00 ms
-PING_SEND       | 2026-08-08 18:29:40  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
-PING_SUCCESS    | 2026-08-08 18:29:40  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 15.24 ms
-ANNOUNCE        | 2026-08-08 18:29:44  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
-PING_RECV       | 2026-08-08 18:30:04  | Received PING from ('127.0.0.1', 9792)
-PING_RECV       | 2026-08-08 18:30:08  | Received PING from ('127.0.0.1', 9806)
-ANNOUNCE        | 2026-08-08 18:30:08  | [Transferring_These_Files] Sending periodic update to tracker...
-HEARTBEAT_SYNC  | 2026-08-08 18:30:10  | Periodic ping
-PING_SEND       | 2026-08-08 18:30:10  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
-PING_SUCCESS    | 2026-08-08 18:30:10  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 17.18 ms
-PING_SEND       | 2026-08-08 18:30:10  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
-PING_SUCCESS    | 2026-08-08 18:30:10  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 16.18 ms
-ANNOUNCE        | 2026-08-08 18:30:14  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
-PING_RECV       | 2026-08-08 18:30:34  | Received PING from ('127.0.0.1', 9857)
-PING_RECV       | 2026-08-08 18:30:38  | Received PING from ('127.0.0.1', 9865)
-ANNOUNCE        | 2026-08-08 18:30:38  | [Transferring_These_Files] Sending periodic update to tracker...
-HEARTBEAT_SYNC  | 2026-08-08 18:30:40  | Periodic ping
-PING_SEND       | 2026-08-08 18:30:40  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
-PING_SUCCESS    | 2026-08-08 18:30:40  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 16.73 ms
-PING_SEND       | 2026-08-08 18:30:40  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
-PING_SUCCESS    | 2026-08-08 18:30:40  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 15.00 ms
-ANNOUNCE        | 2026-08-08 18:30:44  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
-PING_RECV       | 2026-08-08 18:31:04  | Received PING from ('127.0.0.1', 9881)
-PING_RECV       | 2026-08-08 18:31:08  | Received PING from ('127.0.0.1', 9887)
-ANNOUNCE        | 2026-08-08 18:31:08  | [Transferring_These_Files] Sending periodic update to tracker...
-HEARTBEAT_SYNC  | 2026-08-08 18:31:10  | Periodic ping
-PING_SEND       | 2026-08-08 18:31:10  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
-PING_SUCCESS    | 2026-08-08 18:31:10  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 15.11 ms
-PING_SEND       | 2026-08-08 18:31:10  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
-PING_SUCCESS    | 2026-08-08 18:31:10  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 19.61 ms
-ANNOUNCE        | 2026-08-08 18:31:14  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
-PING_RECV       | 2026-08-08 18:31:34  | Received PING from ('127.0.0.1', 9908)
-PING_RECV       | 2026-08-08 18:31:38  | Received PING from ('127.0.0.1', 9924)
-ANNOUNCE        | 2026-08-08 18:31:38  | [Transferring_These_Files] Sending periodic update to tracker...
-HEARTBEAT_SYNC  | 2026-08-08 18:31:40  | Periodic ping
-PING_SEND       | 2026-08-08 18:31:40  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
-PING_SUCCESS    | 2026-08-08 18:31:40  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 14.90 ms
-PING_SEND       | 2026-08-08 18:31:40  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
-PING_SUCCESS    | 2026-08-08 18:31:40  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 16.37 ms
-ANNOUNCE        | 2026-08-08 18:31:44  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
-PING_RECV       | 2026-08-08 18:32:04  | Received PING from ('127.0.0.1', 9944)
-PING_RECV       | 2026-08-08 18:32:08  | Received PING from ('127.0.0.1', 9952)
-ANNOUNCE        | 2026-08-08 18:32:08  | [Transferring_These_Files] Sending periodic update to tracker...
-HEARTBEAT_SYNC  | 2026-08-08 18:32:10  | Periodic ping
-PING_SEND       | 2026-08-08 18:32:10  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
-PING_SUCCESS    | 2026-08-08 18:32:10  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 14.52 ms
-PING_SEND       | 2026-08-08 18:32:10  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
-PING_SUCCESS    | 2026-08-08 18:32:10  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 16.04 ms
-ANNOUNCE        | 2026-08-08 18:32:14  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
-PING_RECV       | 2026-08-08 18:32:35  | Received PING from ('127.0.0.1', 10009)
-PING_RECV       | 2026-08-08 18:32:38  | Received PING from ('127.0.0.1', 10017)
-ANNOUNCE        | 2026-08-08 18:32:39  | [Transferring_These_Files] Sending periodic update to tracker...
-HEARTBEAT_SYNC  | 2026-08-08 18:32:40  | Periodic ping
-PING_SEND       | 2026-08-08 18:32:40  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
-PING_SUCCESS    | 2026-08-08 18:32:40  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 20.62 ms
-PING_SEND       | 2026-08-08 18:32:40  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
-PING_SUCCESS    | 2026-08-08 18:32:41  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 18.00 ms
-ANNOUNCE        | 2026-08-08 18:32:44  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
-PING_RECV       | 2026-08-08 18:33:05  | Received PING from ('127.0.0.1', 10032)
-PING_RECV       | 2026-08-08 18:33:09  | Received PING from ('127.0.0.1', 10040)
-ANNOUNCE        | 2026-08-08 18:33:09  | [Transferring_These_Files] Sending periodic update to tracker...
-HEARTBEAT_SYNC  | 2026-08-08 18:33:11  | Periodic ping
-PING_SEND       | 2026-08-08 18:33:11  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
-PING_SUCCESS    | 2026-08-08 18:33:11  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 16.40 ms
-PING_SEND       | 2026-08-08 18:33:11  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
-PING_SUCCESS    | 2026-08-08 18:33:11  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 17.86 ms
-ANNOUNCE        | 2026-08-08 18:33:14  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
-PING_RECV       | 2026-08-08 18:33:35  | Received PING from ('127.0.0.1', 10063)
-ANNOUNCE        | 2026-08-08 18:33:39  | [Transferring_These_Files] Sending periodic update to tracker...
-PING_RECV       | 2026-08-08 18:33:39  | Received PING from ('127.0.0.1', 10072)
-HEARTBEAT_SYNC  | 2026-08-08 18:33:41  | Periodic ping
-PING_SEND       | 2026-08-08 18:33:41  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
-PING_SUCCESS    | 2026-08-08 18:33:41  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 15.97 ms
-PING_SEND       | 2026-08-08 18:33:41  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
-PING_SUCCESS    | 2026-08-08 18:33:41  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 17.11 ms
-ANNOUNCE        | 2026-08-08 18:33:44  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
-PING_RECV       | 2026-08-08 18:34:05  | Received PING from ('127.0.0.1', 10088)
-ANNOUNCE        | 2026-08-08 18:34:09  | [Transferring_These_Files] Sending periodic update to tracker...
-PING_RECV       | 2026-08-08 18:34:09  | Received PING from ('127.0.0.1', 10095)
-HEARTBEAT_SYNC  | 2026-08-08 18:34:11  | Periodic ping
-PING_SEND       | 2026-08-08 18:34:11  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
-PING_SUCCESS    | 2026-08-08 18:34:11  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 19.00 ms
-PING_SEND       | 2026-08-08 18:34:11  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
-PING_SUCCESS    | 2026-08-08 18:34:11  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 16.11 ms
-ANNOUNCE        | 2026-08-08 18:34:14  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
-PING_RECV       | 2026-08-08 18:34:35  | Received PING from ('127.0.0.1', 10149)
-ANNOUNCE        | 2026-08-08 18:34:39  | [Transferring_These_Files] Sending periodic update to tracker...
-PING_RECV       | 2026-08-08 18:34:39  | Received PING from ('127.0.0.1', 10156)
-HEARTBEAT_SYNC  | 2026-08-08 18:34:41  | Periodic ping
-PING_SEND       | 2026-08-08 18:34:41  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
-PING_SUCCESS    | 2026-08-08 18:34:41  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 18.37 ms
-PING_SEND       | 2026-08-08 18:34:41  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
-PING_SUCCESS    | 2026-08-08 18:34:41  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 17.45 ms
-ANNOUNCE        | 2026-08-08 18:34:44  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
-PING_RECV       | 2026-08-08 18:35:05  | Received PING from ('127.0.0.1', 10171)
-ANNOUNCE        | 2026-08-08 18:35:09  | [Transferring_These_Files] Sending periodic update to tracker...
-PING_RECV       | 2026-08-08 18:35:09  | Received PING from ('127.0.0.1', 10178)
-HEARTBEAT_SYNC  | 2026-08-08 18:35:11  | Periodic ping
-PING_SEND       | 2026-08-08 18:35:11  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
-PING_SUCCESS    | 2026-08-08 18:35:11  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 17.53 ms
-PING_SEND       | 2026-08-08 18:35:11  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
-PING_SUCCESS    | 2026-08-08 18:35:11  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 17.97 ms
-ANNOUNCE        | 2026-08-08 18:35:14  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
-PING_RECV       | 2026-08-08 18:35:36  | Received PING from ('127.0.0.1', 10204)
-ANNOUNCE        | 2026-08-08 18:35:39  | [Transferring_These_Files] Sending periodic update to tracker...
-PING_RECV       | 2026-08-08 18:35:39  | Received PING from ('127.0.0.1', 10219)
-HEARTBEAT_SYNC  | 2026-08-08 18:35:41  | Periodic ping
-PING_SEND       | 2026-08-08 18:35:41  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
-PING_SUCCESS    | 2026-08-08 18:35:41  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 16.00 ms
-PING_SEND       | 2026-08-08 18:35:41  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
-PING_SUCCESS    | 2026-08-08 18:35:41  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 16.36 ms
-ANNOUNCE        | 2026-08-08 18:35:44  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
-PING_RECV       | 2026-08-08 18:36:06  | Received PING from ('127.0.0.1', 10292)
-ANNOUNCE        | 2026-08-08 18:36:09  | [Transferring_These_Files] Sending periodic update to tracker...
-PING_RECV       | 2026-08-08 18:36:09  | Received PING from ('127.0.0.1', 10301)
-HEARTBEAT_SYNC  | 2026-08-08 18:36:11  | Periodic ping
-PING_SEND       | 2026-08-08 18:36:11  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
-PING_SUCCESS    | 2026-08-08 18:36:11  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 16.03 ms
-PING_SEND       | 2026-08-08 18:36:11  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
-PING_SUCCESS    | 2026-08-08 18:36:12  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 17.35 ms
-ANNOUNCE        | 2026-08-08 18:36:15  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
-PING_RECV       | 2026-08-08 18:36:36  | Received PING from ('127.0.0.1', 10363)
-ANNOUNCE        | 2026-08-08 18:36:39  | [Transferring_These_Files] Sending periodic update to tracker...
-PING_RECV       | 2026-08-08 18:36:40  | Received PING from ('127.0.0.1', 10382)
-HEARTBEAT_SYNC  | 2026-08-08 18:36:42  | Periodic ping
-PING_SEND       | 2026-08-08 18:36:42  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
-PING_SUCCESS    | 2026-08-08 18:36:42  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 15.48 ms
-PING_SEND       | 2026-08-08 18:36:42  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
-PING_SUCCESS    | 2026-08-08 18:36:42  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 20.49 ms
-ANNOUNCE        | 2026-08-08 18:36:45  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
-PING_RECV       | 2026-08-08 18:37:06  | Received PING from ('127.0.0.1', 10427)
-ANNOUNCE        | 2026-08-08 18:37:09  | [Transferring_These_Files] Sending periodic update to tracker...
-PING_RECV       | 2026-08-08 18:37:10  | Received PING from ('127.0.0.1', 10438)
-HEARTBEAT_SYNC  | 2026-08-08 18:37:12  | Periodic ping
-PING_SEND       | 2026-08-08 18:37:12  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
-PING_SUCCESS    | 2026-08-08 18:37:12  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 17.00 ms
-PING_SEND       | 2026-08-08 18:37:12  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
-PING_SUCCESS    | 2026-08-08 18:37:12  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 18.29 ms
-ANNOUNCE        | 2026-08-08 18:37:15  | [Transferring_These_Files/sample3.png] Sending periodic update to tracker...
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           ANNOUNCE        | 2026-08-08 18:23:51  | [Transferring_These_Files] Sending periodic update to tracker...
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ANNOUNCE        | 2026-08-08 19:23:40  | [Transferring_These_Files] Sending periodic update to tracker...
+PING_RECV       | 2026-08-08 19:23:44  | Received PING from ('127.0.0.1', 2495)
+PING_RECV       | 2026-08-08 19:23:57  | Received PING from ('127.0.0.1', 2523)
+ANNOUNCE        | 2026-08-08 19:24:10  | [Transferring_These_Files] Sending periodic update to tracker...
+PING_RECV       | 2026-08-08 19:24:14  | Received PING from ('127.0.0.1', 2549)
+PING_RECV       | 2026-08-08 19:24:27  | Received PING from ('127.0.0.1', 2561)
+ANNOUNCE        | 2026-08-08 19:24:40  | [Transferring_These_Files] Sending periodic update to tracker...
+PING_RECV       | 2026-08-08 19:24:44  | Received PING from ('127.0.0.1', 2586)
+PING_RECV       | 2026-08-08 19:24:57  | Received PING from ('127.0.0.1', 2597)
+ANNOUNCE        | 2026-08-08 19:25:10  | [Transferring_These_Files] Sending periodic update to tracker...
+PING_RECV       | 2026-08-08 19:25:14  | Received PING from ('127.0.0.1', 2609)
+PING_RECV       | 2026-08-08 19:25:27  | Received PING from ('127.0.0.1', 2619)
+ANNOUNCE        | 2026-08-08 19:25:40  | [Transferring_These_Files] Sending periodic update to tracker...
+PING_RECV       | 2026-08-08 19:25:44  | Received PING from ('127.0.0.1', 2640)
+PING_RECV       | 2026-08-08 19:25:58  | Received PING from ('127.0.0.1', 2664)
+ANNOUNCE        | 2026-08-08 19:26:11  | [Transferring_These_Files] Sending periodic update to tracker...
+PING_RECV       | 2026-08-08 19:26:15  | Received PING from ('127.0.0.1', 2704)
+PING_RECV       | 2026-08-08 19:26:28  | Received PING from ('127.0.0.1', 2720)
+ANNOUNCE        | 2026-08-08 19:26:41  | [Transferring_These_Files] Sending periodic update to tracker...
+PING_RECV       | 2026-08-08 19:26:45  | Received PING from ('127.0.0.1', 2733)
+PING_RECV       | 2026-08-08 19:26:58  | Received PING from ('127.0.0.1', 2749)
+ANNOUNCE        | 2026-08-08 19:27:11  | [Transferring_These_Files] Sending periodic update to tracker...
+PING_RECV       | 2026-08-08 19:27:15  | Received PING from ('127.0.0.1', 2765)
+PING_RECV       | 2026-08-08 19:27:28  | Received PING from ('127.0.0.1', 2775)
+ANNOUNCE        | 2026-08-08 19:27:41  | [Transferring_These_Files] Sending periodic update to tracker...
+PING_RECV       | 2026-08-08 19:27:45  | Received PING from ('127.0.0.1', 2792)
+PING_RECV       | 2026-08-08 19:27:58  | Received PING from ('127.0.0.1', 2803)
+ANNOUNCE        | 2026-08-08 19:28:11  | [Transferring_These_Files] Sending periodic update to tracker...
+PING_RECV       | 2026-08-08 19:28:15  | Received PING from ('127.0.0.1', 2841)
+PING_RECV       | 2026-08-08 19:28:28  | Received PING from ('127.0.0.1', 2863)
+ANNOUNCE        | 2026-08-08 19:28:41  | [Transferring_These_Files] Sending periodic update to tracker...
+PING_RECV       | 2026-08-08 19:28:45  | Received PING from ('127.0.0.1', 2876)
+PING_RECV       | 2026-08-08 19:28:58  | Received PING from ('127.0.0.1', 2884)
+ANNOUNCE        | 2026-08-08 19:29:11  | [Transferring_These_Files] Sending periodic update to tracker...
+PING_RECV       | 2026-08-08 19:29:16  | Received PING from ('127.0.0.1', 2898)
+PING_RECV       | 2026-08-08 19:29:29  | Received PING from ('127.0.0.1', 2910)
+ANNOUNCE        | 2026-08-08 19:29:41  | [Transferring_These_Files] Sending periodic update to tracker...
+PING_RECV       | 2026-08-08 19:29:46  | Received PING from ('127.0.0.1', 2919)
+PING_RECV       | 2026-08-08 19:29:59  | Received PING from ('127.0.0.1', 2932)
+ANNOUNCE        | 2026-08-08 19:30:11  | [Transferring_These_Files] Sending periodic update to tracker...
+PING_RECV       | 2026-08-08 19:30:16  | Received PING from ('127.0.0.1', 2966)
+PING_RECV       | 2026-08-08 19:30:29  | Received PING from ('127.0.0.1', 3002)
+ANNOUNCE        | 2026-08-08 19:30:41  | [Transferring_These_Files] Sending periodic update to tracker...
+PING_RECV       | 2026-08-08 19:30:46  | Received PING from ('127.0.0.1', 3020)
+PING_RECV       | 2026-08-08 19:30:59  | Received PING from ('127.0.0.1', 3034)
+ANNOUNCE        | 2026-08-08 19:31:11  | [Transferring_These_Files] Sending periodic update to tracker...
+HEARTBEAT_SYNC  | 2026-08-08 19:31:14  | Periodic ping
+PING_SEND       | 2026-08-08 19:31:14  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
+PING_SUCCESS    | 2026-08-08 19:31:14  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 19.00 ms
+PING_SEND       | 2026-08-08 19:31:14  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 19:31:14  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 20.27 ms
+PING_RECV       | 2026-08-08 19:31:16  | Received PING from ('127.0.0.1', 3325)
+SHUTDOWN_INIT   | 2026-08-08 19:31:16  | Keyboard interrupt received. Deregistering from tracker.
+PORT_BUSY       | 2026-08-08 19:31:44  | Port 6881 in use. Trying next...
+PORT_BUSY       | 2026-08-08 19:31:44  | Port 6882 in use. Trying next...
+LISTENER_START  | 2026-08-08 19:31:44  | Peer listening for direct connections on port 6883
+FILE_CHECK      | 2026-08-08 19:31:47  | Determined status as LEECHER for Transferring_These_Files
+HANDSHAKE_SEND  | 2026-08-08 19:31:47  | [Transferring_These_Files] Initiating handshake with 127.0.0.1:6881
+HANDSHAKE_SUCCESS | 2026-08-08 19:31:47  | [Transferring_These_Files] Handshake successful with -AA0001-000000000002
+HANDSHAKE_SEND  | 2026-08-08 19:31:47  | [Transferring_These_Files] Initiating handshake with 127.0.0.1:6882
+STATE_CHANGE    | 2026-08-08 19:31:47  | Sent INTERESTED to 127.0.0.1:6881
+HANDSHAKE_SUCCESS | 2026-08-08 19:31:47  | [Transferring_These_Files] Handshake successful with -AA0001-000000000001
+STATE_CHANGE    | 2026-08-08 19:31:47  | Sent INTERESTED to 127.0.0.1:6882
+HANDSHAKE_RECV  | 2026-08-08 19:32:05  | Handshake verified from -AA0001-000000000002
+STATE_CHANGE    | 2026-08-08 19:32:05  | Sent INTERESTED to 127.0.0.1:3420
+PING_RECV       | 2026-08-08 19:32:06  | Received PING from ('127.0.0.1', 3424)
+HANDSHAKE_RECV  | 2026-08-08 19:32:11  | Handshake verified from -AA0001-000000000001
+STATE_CHANGE    | 2026-08-08 19:32:11  | Sent INTERESTED to 127.0.0.1:3432
+PING_RECV       | 2026-08-08 19:32:12  | Received PING from ('127.0.0.1', 3436)
+HEARTBEAT_SYNC  | 2026-08-08 19:32:15  | Periodic ping
+PING_SEND       | 2026-08-08 19:32:15  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
+PING_SUCCESS    | 2026-08-08 19:32:15  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 18.58 ms
+PING_SEND       | 2026-08-08 19:32:15  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 19:32:15  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 18.00 ms
+ANNOUNCE        | 2026-08-08 19:32:17  | [Transferring_These_Files] Sending periodic update to tracker...
+PING_RECV       | 2026-08-08 19:32:36  | Received PING from ('127.0.0.1', 3474)
+PING_RECV       | 2026-08-08 19:32:42  | Received PING from ('127.0.0.1', 3498)
+HEARTBEAT_SYNC  | 2026-08-08 19:32:45  | Periodic ping
+PING_SEND       | 2026-08-08 19:32:45  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
+PING_SUCCESS    | 2026-08-08 19:32:45  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 19.76 ms
+PING_SEND       | 2026-08-08 19:32:45  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 19:32:45  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 16.71 ms
+ANNOUNCE        | 2026-08-08 19:32:47  | [Transferring_These_Files] Sending periodic update to tracker...
+PING_RECV       | 2026-08-08 19:33:06  | Received PING from ('127.0.0.1', 3523)
+PING_RECV       | 2026-08-08 19:33:12  | Received PING from ('127.0.0.1', 3533)
+HEARTBEAT_SYNC  | 2026-08-08 19:33:15  | Periodic ping
+PING_SEND       | 2026-08-08 19:33:15  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
+PING_SUCCESS    | 2026-08-08 19:33:15  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 18.00 ms
+PING_SEND       | 2026-08-08 19:33:15  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 19:33:15  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 19.42 ms
+ANNOUNCE        | 2026-08-08 19:33:17  | [Transferring_These_Files] Sending periodic update to tracker...
+PING_RECV       | 2026-08-08 19:33:36  | Received PING from ('127.0.0.1', 3549)
+PING_RECV       | 2026-08-08 19:33:42  | Received PING from ('127.0.0.1', 3557)
+HEARTBEAT_SYNC  | 2026-08-08 19:33:45  | Periodic ping
+PING_SEND       | 2026-08-08 19:33:45  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
+PING_SUCCESS    | 2026-08-08 19:33:46  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 17.58 ms
+PING_SEND       | 2026-08-08 19:33:46  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 19:33:46  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 18.00 ms
+ANNOUNCE        | 2026-08-08 19:33:47  | [Transferring_These_Files] Sending periodic update to tracker...
+PING_RECV       | 2026-08-08 19:34:06  | Received PING from ('127.0.0.1', 3568)
+PING_RECV       | 2026-08-08 19:34:12  | Received PING from ('127.0.0.1', 3578)
+HEARTBEAT_SYNC  | 2026-08-08 19:34:16  | Periodic ping
+PING_SEND       | 2026-08-08 19:34:16  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
+PING_SUCCESS    | 2026-08-08 19:34:16  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 20.14 ms
+PING_SEND       | 2026-08-08 19:34:16  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 19:34:16  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 20.64 ms
+ANNOUNCE        | 2026-08-08 19:34:17  | [Transferring_These_Files] Sending periodic update to tracker...
+PING_RECV       | 2026-08-08 19:34:37  | Received PING from ('127.0.0.1', 3606)
+PING_RECV       | 2026-08-08 19:34:43  | Received PING from ('127.0.0.1', 3623)
+HEARTBEAT_SYNC  | 2026-08-08 19:34:46  | Periodic ping
+PING_SEND       | 2026-08-08 19:34:46  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
+PING_SUCCESS    | 2026-08-08 19:34:46  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 25.40 ms
+PING_SEND       | 2026-08-08 19:34:46  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 19:34:46  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 23.33 ms
+ANNOUNCE        | 2026-08-08 19:34:48  | [Transferring_These_Files] Sending periodic update to tracker...
+PING_RECV       | 2026-08-08 19:35:07  | Received PING from ('127.0.0.1', 3663)
+PING_RECV       | 2026-08-08 19:35:13  | Received PING from ('127.0.0.1', 3671)
+HEARTBEAT_SYNC  | 2026-08-08 19:35:16  | Periodic ping
+PING_SEND       | 2026-08-08 19:35:16  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
+PING_SUCCESS    | 2026-08-08 19:35:16  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 17.00 ms
+PING_SEND       | 2026-08-08 19:35:16  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 19:35:16  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 17.20 ms
+ANNOUNCE        | 2026-08-08 19:35:18  | [Transferring_These_Files] Sending periodic update to tracker...
+PING_RECV       | 2026-08-08 19:35:37  | Received PING from ('127.0.0.1', 3785)
+PING_RECV       | 2026-08-08 19:35:43  | Received PING from ('127.0.0.1', 3793)
+HEARTBEAT_SYNC  | 2026-08-08 19:35:46  | Periodic ping
+PING_SEND       | 2026-08-08 19:35:46  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
+PING_SUCCESS    | 2026-08-08 19:35:46  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 21.24 ms
+PING_SEND       | 2026-08-08 19:35:46  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 19:35:46  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 21.00 ms
+ANNOUNCE        | 2026-08-08 19:35:48  | [Transferring_These_Files] Sending periodic update to tracker...
+PING_RECV       | 2026-08-08 19:36:07  | Received PING from ('127.0.0.1', 3850)
+PING_RECV       | 2026-08-08 19:36:13  | Received PING from ('127.0.0.1', 3858)
+HEARTBEAT_SYNC  | 2026-08-08 19:36:16  | Periodic ping
+PING_SEND       | 2026-08-08 19:36:16  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
+PING_SUCCESS    | 2026-08-08 19:36:16  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 18.01 ms
+PING_SEND       | 2026-08-08 19:36:16  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 19:36:16  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 16.07 ms
+ANNOUNCE        | 2026-08-08 19:36:18  | [Transferring_These_Files] Sending periodic update to tracker...
+PING_RECV       | 2026-08-08 19:36:37  | Received PING from ('127.0.0.1', 3910)
+PING_RECV       | 2026-08-08 19:36:43  | Received PING from ('127.0.0.1', 3947)
+HEARTBEAT_SYNC  | 2026-08-08 19:36:46  | Periodic ping
+PING_SEND       | 2026-08-08 19:36:46  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
+PING_SUCCESS    | 2026-08-08 19:36:46  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 19.59 ms
+PING_SEND       | 2026-08-08 19:36:46  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 19:36:47  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 17.08 ms
+ANNOUNCE        | 2026-08-08 19:36:48  | [Transferring_These_Files] Sending periodic update to tracker...
+PING_RECV       | 2026-08-08 19:37:07  | Received PING from ('127.0.0.1', 4030)
+PING_RECV       | 2026-08-08 19:37:13  | Received PING from ('127.0.0.1', 4043)
+HEARTBEAT_SYNC  | 2026-08-08 19:37:17  | Periodic ping
+PING_SEND       | 2026-08-08 19:37:17  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
+PING_SUCCESS    | 2026-08-08 19:37:17  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 19.14 ms
+PING_SEND       | 2026-08-08 19:37:17  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 19:37:17  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 16.93 ms
+ANNOUNCE        | 2026-08-08 19:37:18  | [Transferring_These_Files] Sending periodic update to tracker...
+PING_RECV       | 2026-08-08 19:37:37  | Received PING from ('127.0.0.1', 4057)
+PING_RECV       | 2026-08-08 19:37:43  | Received PING from ('127.0.0.1', 4067)
+HEARTBEAT_SYNC  | 2026-08-08 19:37:47  | Periodic ping
+PING_SEND       | 2026-08-08 19:37:47  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
+PING_SUCCESS    | 2026-08-08 19:37:47  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 17.76 ms
+PING_SEND       | 2026-08-08 19:37:47  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 19:37:47  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 15.68 ms
+ANNOUNCE        | 2026-08-08 19:37:48  | [Transferring_These_Files] Sending periodic update to tracker...
+PING_RECV       | 2026-08-08 19:38:08  | Received PING from ('127.0.0.1', 4086)
+PING_RECV       | 2026-08-08 19:38:14  | Received PING from ('127.0.0.1', 4095)
+HEARTBEAT_SYNC  | 2026-08-08 19:38:17  | Periodic ping
+PING_SEND       | 2026-08-08 19:38:17  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
+PING_SUCCESS    | 2026-08-08 19:38:17  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 19.03 ms
+PING_SEND       | 2026-08-08 19:38:17  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 19:38:17  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 15.24 ms
+ANNOUNCE        | 2026-08-08 19:38:18  | [Transferring_These_Files] Sending periodic update to tracker...
+PING_RECV       | 2026-08-08 19:38:38  | Received PING from ('127.0.0.1', 4110)
+PING_RECV       | 2026-08-08 19:38:44  | Received PING from ('127.0.0.1', 4125)
+HEARTBEAT_SYNC  | 2026-08-08 19:38:47  | Periodic ping
+PING_SEND       | 2026-08-08 19:38:47  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
+PING_SUCCESS    | 2026-08-08 19:38:47  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 20.75 ms
+PING_SEND       | 2026-08-08 19:38:47  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 19:38:47  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 18.01 ms
+ANNOUNCE        | 2026-08-08 19:38:48  | [Transferring_These_Files] Sending periodic update to tracker...
+PING_RECV       | 2026-08-08 19:39:08  | Received PING from ('127.0.0.1', 4194)
+PING_RECV       | 2026-08-08 19:39:14  | Received PING from ('127.0.0.1', 4205)
+HEARTBEAT_SYNC  | 2026-08-08 19:39:17  | Periodic ping
+PING_SEND       | 2026-08-08 19:39:17  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
+PING_SUCCESS    | 2026-08-08 19:39:17  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 16.04 ms
+PING_SEND       | 2026-08-08 19:39:17  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 19:39:17  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 18.06 ms
+ANNOUNCE        | 2026-08-08 19:39:18  | [Transferring_These_Files] Sending periodic update to tracker...
+PING_RECV       | 2026-08-08 19:39:38  | Received PING from ('127.0.0.1', 4222)
+PING_RECV       | 2026-08-08 19:39:44  | Received PING from ('127.0.0.1', 4234)
+HEARTBEAT_SYNC  | 2026-08-08 19:39:47  | Periodic ping
+PING_SEND       | 2026-08-08 19:39:47  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6881
+PING_SUCCESS    | 2026-08-08 19:39:47  | [Heartbeat] Received PONG from 127.0.0.1:6881 | RTT: 17.96 ms
+PING_SEND       | 2026-08-08 19:39:47  | [Heartbeat] Attempting to ping peer at 127.0.0.1:6882
+PING_SUCCESS    | 2026-08-08 19:39:47  | [Heartbeat] Received PONG from 127.0.0.1:6882 | RTT: 17.35 ms
+ANNOUNCE        | 2026-08-08 19:39:48  | [Transferring_These_Files] Sending periodic update to tracker...
+SHUTDOWN_INIT   | 2026-08-08 19:39:56  | Keyboard interrupt received. Deregistering from tracker.
+PORT_BUSY       | 2026-08-08 19:40:10  | Port 6881 in use. Trying next...
+PORT_BUSY       | 2026-08-08 19:40:10  | Port 6882 in use. Trying next...
+LISTENER_START  | 2026-08-08 19:40:10  | Peer listening for direct connections on port 6883
+FILE_CHECK      | 2026-08-08 19:40:12  | Determined status as LEECHER for Transferring_These_Files
+HANDSHAKE_SEND  | 2026-08-08 19:40:12  | [Transferring_These_Files] Initiating handshake with 127.0.0.1:6881
+HANDSHAKE_SUCCESS | 2026-08-08 19:40:12  | [Transferring_These_Files] Handshake successful with -AA0001-000000000002
+HANDSHAKE_SEND  | 2026-08-08 19:40:12  | [Transferring_These_Files] Initiating handshake with 127.0.0.1:6882
+STATE_CHANGE    | 2026-08-08 19:40:12  | Sent INTERESTED to 127.0.0.1:6881
+HANDSHAKE_SUCCESS | 2026-08-08 19:40:12  | [Transferring_These_Files] Handshake successful with -AA0001-000000000001
+STATE_CHANGE    | 2026-08-08 19:40:13  | Sent INTERESTED to 127.0.0.1:6882
+SHUTDOWN_INIT   | 2026-08-08 19:40:16  | Keyboard interrupt received. Deregistering from tracker.
+PORT_BUSY       | 2026-08-08 19:44:54  | Port 6881 in use. Trying next...
+PORT_BUSY       | 2026-08-08 19:44:54  | Port 6882 in use. Trying next...
+LISTENER_START  | 2026-08-08 19:44:55  | Peer listening for direct connections on port 6883
+FILE_CHECK      | 2026-08-08 19:45:02  | Determined status as LEECHER for Transferring_These_Files
+HANDSHAKE_SEND  | 2026-08-08 19:45:02  | [Transferring_These_Files] Initiating handshake with 127.0.0.1:6881
+HANDSHAKE_SUCCESS | 2026-08-08 19:45:02  | [Transferring_These_Files] Handshake successful with -AA0001-000000000001
+HANDSHAKE_SEND  | 2026-08-08 19:45:02  | [Transferring_These_Files] Initiating handshake with 127.0.0.1:6882
+STATE_CHANGE    | 2026-08-08 19:45:02  | Sent INTERESTED to 127.0.0.1:6881
+HANDSHAKE_SUCCESS | 2026-08-08 19:45:02  | [Transferring_These_Files] Handshake successful with -AA0001-000000000002
+STATE_CHANGE    | 2026-08-08 19:45:02  | Sent INTERESTED to 127.0.0.1:6882
+SHUTDOWN_INIT   | 2026-08-08 19:45:04  | Keyboard interrupt received. Deregistering from tracker.
