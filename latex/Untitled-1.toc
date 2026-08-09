@@ -1,21 +1,15 @@
 \contentsline {section}{\numberline {1}Torrent File Generation}{2}{section.1}%
-\contentsline {subsection}{\numberline {1.1}Implementation}{2}{subsection.1.1}%
-\contentsline {subsection}{\numberline {1.2}Why Bencoded Format?}{3}{subsection.1.2}%
-\contentsline {section}{\numberline {2}Tracker Web Service Implementation}{3}{section.2}%
-\contentsline {subsection}{\numberline {2.1}Concurrency and Architecture}{3}{subsection.2.1}%
-\contentsline {subsection}{\numberline {2.2}State Management (Swarm Database)}{3}{subsection.2.2}%
-\contentsline {subsection}{\numberline {2.3}Request Parsing and Event Handling}{4}{subsection.2.3}%
-\contentsline {subsection}{\numberline {2.4}Bencoded Response and Logging}{4}{subsection.2.4}%
-\contentsline {section}{\numberline {3}Peer Client Implementation}{4}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Client Initialization and Port Binding}{4}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Torrent Thread Pool and Network Interaction}{4}{subsection.3.2}%
-\contentsline {subsection}{\numberline {3.3}End to End Peer Communication (Ping Protocol)}{5}{subsection.3.3}%
-\contentsline {subsection}{\numberline {3.4}Graceful Shutdown}{5}{subsection.3.4}%
-\contentsline {section}{\numberline {4}System Logging and Event Tracking}{5}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Logger Architecture and Isolation}{5}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Formatting and Metadata Management}{6}{subsection.4.2}%
-\contentsline {section}{\numberline {A}Python Source Codes}{7}{appendix.A}%
-\contentsline {subsection}{\numberline {A.1}Torrent Generator Script}{7}{subsection.A.1}%
-\contentsline {subsection}{\numberline {A.2}Tracker Web Service Script}{9}{subsection.A.2}%
-\contentsline {subsection}{\numberline {A.3}Peer Client Script}{12}{subsection.A.3}%
-\contentsline {subsection}{\numberline {A.4}Logging Utility Script}{17}{subsection.A.4}%
+\contentsline {section}{\numberline {2}Tracker Web Service}{2}{section.2}%
+\contentsline {section}{\numberline {3}Peer Client Operation}{3}{section.3}%
+\contentsline {section}{\numberline {4}Centralized Logger}{4}{section.4}%
+\contentsline {section}{\numberline {5}Web Based Dashboard (AI Assisted)}{4}{section.5}%
+\contentsline {section}{\numberline {6}Unimplemented Features \& Future Work}{4}{section.6}%
+\contentsline {section}{\numberline {7}Step by Step Execution Guide}{5}{section.7}%
+\contentsline {section}{\numberline {8}Practical Execution and Dashboard Demonstration}{6}{section.8}%
+\contentsline {subsection}{\numberline {8.1}Initialization}{6}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.2}Seeder Registration}{6}{subsection.8.2}%
+\contentsline {subsection}{\numberline {8.3}Leecher Joining and Data Transfer}{7}{subsection.8.3}%
+\contentsline {subsection}{\numberline {8.4}Graceful Disconnection}{7}{subsection.8.4}%
+\contentsline {section}{\numberline {9}Wireshark and Network Observation}{8}{section.9}%
+\contentsline {subsection}{\numberline {9.1}Tracker Communication}{8}{subsection.9.1}%
+\contentsline {subsection}{\numberline {9.2}Peer-to-Peer TCP Fragmentation}{8}{subsection.9.2}%
